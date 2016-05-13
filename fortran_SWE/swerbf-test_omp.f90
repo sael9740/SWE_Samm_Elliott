@@ -401,7 +401,7 @@ real*8, intent(out) ::  F_t(Nvar,Nnodes)
 real*8, intent(out) ::  tps1   ! timing variable for 1st loop
 real*8, intent(out) ::  tps2   ! timing variable for 2nd loop
 
-integer :: i, inbr, ivar
+integer :: i, inbr, ivar, tid, debug
 
 real*8  Tx(Nvar,Nnodes)
 real*8  Ty(Nvar,Nnodes)
@@ -429,7 +429,7 @@ real*8 Tz_i1, Tz_i2, Tz_i3, Tz_i4
 !
 
 call cpu_time(tstart)
-!$omp parallel private(sum1,sum2,sum3,sum4) firstprivate(ivar,inbr)
+!$omp parallel private(sum1,sum2,sum3,sum4,ivar,inbr)
 !$omp do
 do i=1,Nnodes   ! 1st loop to be optimized
 
@@ -437,6 +437,10 @@ do i=1,Nnodes   ! 1st loop to be optimized
    ! FLOPS1 = 8*Nnbr*Nvar (assumes precalculate DP{x,y,z}/a)
    !
    !
+   if (debug == 1)
+      tid = omp_get_thread_num()
+      print*,"I am thread # ",tid," and i=",i
+   end if
 
    do ivar=1,NVar
       sum1 = 0.0D0
