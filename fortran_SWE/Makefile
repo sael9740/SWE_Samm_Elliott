@@ -26,4 +26,4 @@ all: $(SRCS)
 	$(CC) $(CFLAGS) $(SRCS) -o $(EXE)
 
 clean: 
-	rm ./swe
+	rm ./swe *.mod *.optrpt
