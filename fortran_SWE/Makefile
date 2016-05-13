@@ -2,28 +2,32 @@
 #INTEL_OPENCL := /opt/intel/opencl-1.2-5.0.0.57/lib64
 
 # compiler option
-#CC = gfortran
-CC = ifort
+#FC = gfortran
+FC = ifort
 
 OPT = -O3
 
 # Compile-time flags
-ifeq ($(CC),gfortran)
-	CFLAGS = $(OPT) 
+ifeq ($(FC),gfortran)
+	FFLAGS = $(OPT) 
 else
-	CFLAGS = $(OPT) -g -qopt-report=5 -assume byterecl -xHost -align array64byte
+	FFLAGS = $(OPT) -g -qopt-report=5 -assume byterecl -xHost -align array64byte
 endif
 
 #INC = 
 
-SRCS = swerbf-test_serial.f90
-
+OMPSRC = swerbf-test_serial.f90
+SERIALSRC = swerbf-test_serial.f90
+SRCS = $(OMPSRC) $(SERIALSRC)
 #LIB = 
 
-EXE = swe_serial.exe
-
 all: $(SRCS) 
-	$(CC) $(CFLAGS) $(SRCS) -o $(EXE)
+
+serial: $(SERIALSRC)
+	$(FC) $(FFLAGS) $(SERIALSRC) -o swe_serial.exe
+
+omp: $(OMPSRC)
+	$(FC) $(FFLAGS) -openmp $(OMPSRC) -o swe_omp.exe
 
 clean: 
-	rm swe *.mod *.optrpt
+	rm *.exe *.mod *.optrpt
