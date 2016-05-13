@@ -429,6 +429,8 @@ real*8 Tz_i1, Tz_i2, Tz_i3, Tz_i4
 !
 
 call cpu_time(tstart)
+!$omp parallel private(sum1,sum2,sum3,sum4)
+!$omp do
 do i=1,Nnodes   ! 1st loop to be optimized
 
    ! 
@@ -453,7 +455,9 @@ do i=1,Nnodes   ! 1st loop to be optimized
       HV(ivar,i) = sum4
    end do
 
-end do 
+end do
+!$omp end do
+!$omp end parallel
 call cpu_time(tstop)
 tps1 = tps1 + (tstop-tstart)
 
