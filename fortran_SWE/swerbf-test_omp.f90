@@ -100,6 +100,7 @@ program swe
   use coords
   use derivs
   use times
+  use omp_lib
 implicit none
 
   real*8 fcor(Nnodes)
