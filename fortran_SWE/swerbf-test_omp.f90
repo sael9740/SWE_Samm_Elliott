@@ -401,7 +401,7 @@ real*8, intent(out) ::  F_t(Nvar,Nnodes)
 real*8, intent(out) ::  tps1   ! timing variable for 1st loop
 real*8, intent(out) ::  tps2   ! timing variable for 2nd loop
 
-integer :: i, inbr, ivar, tid, debug = 1
+integer :: i, inbr, ivar
 
 real*8  Tx(Nvar,Nnodes)
 real*8  Ty(Nvar,Nnodes)
@@ -436,11 +436,6 @@ do i=1,Nnodes   ! 1st loop to be optimized
    ! 
    ! FLOPS1 = 8*Nnbr*Nvar (assumes precalculate DP{x,y,z}/a)
    !
-   !
-   if (debug == 1)
-      tid = omp_get_thread_num()
-      print*,"I am thread # ",tid," and i=",i
-   end if
 
    do ivar=1,NVar
       sum1 = 0.0D0
