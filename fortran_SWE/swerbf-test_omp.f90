@@ -100,6 +100,7 @@ program swe
   use coords
   use derivs
   use times
+  use omp_lib
 implicit none
 
   real*8 fcor(Nnodes)
@@ -189,7 +190,7 @@ implicit none
   tps1=0.0D0
   tps2=0.0D0
 
-  call cpu_time(tstart)
+  tstart = omp_get_wtime()
   do  nt=1,100!nsteps
 
       ! 
@@ -231,7 +232,7 @@ implicit none
       H_t = H_t + (1.0D0/6.0D0)*(d1 + 2.0D0*d2 + 2.0D0*d3 + d4)
 
   end do
-  call cpu_time(tstop)
+  tstop = omp_get_wtime()
 
   !==================
   ! transpose H_t back to H for verification purpose
@@ -390,7 +391,7 @@ subroutine evalCartRhs(fcor,ghm,gradghm_t,H_t,F_t, tps1, tps2)
   use dims
   use derivs
   use coords
-  use omp_lib
+  !use omp_lib
 implicit none
 
 real*8, intent(in)  ::  fcor(Nnodes)
