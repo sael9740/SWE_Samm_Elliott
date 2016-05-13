@@ -250,7 +250,7 @@ implicit none
   print *, "Total (per step) ", tps
   
   ! Verify output by checking H matrix
-  open(UNIT=22, FILE="H_debug.bin", STATUS="OLD", &
+  open(UNIT=22, FILE="icos163842_bin_files/H_debug_100_step.bin", STATUS="OLD", &
           FORM="UNFORMATTED", ACCESS="DIRECT", RECL=8)
 
   recNum=1
@@ -570,7 +570,7 @@ implicit none
   integer :: j
   integer :: recNum=1 !record number
 
-  open(UNIT=20, FILE="idx_transposed_binary.bin", STATUS="OLD", &
+  open(UNIT=20, FILE="icos163842_bin_files/idx_transposed_binary.bin", STATUS="OLD", &
           FORM="UNFORMATTED", ACCESS="DIRECT", RECL=4)
 
   do i=1,Nnodes
@@ -581,7 +581,7 @@ implicit none
   end do
   close(UNIT=20)
 
-  open(UNIT=21, FILE="DP_binary.bin", STATUS="OLD", &
+  open(UNIT=21, FILE="icos163842_bin_files/DP_binary.bin", STATUS="OLD", &
           FORM="UNFORMATTED", ACCESS="DIRECT", RECL=8)
 
   recNum=1

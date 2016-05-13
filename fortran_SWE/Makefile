@@ -11,19 +11,19 @@ OPT = -O3
 ifeq ($(CC),gfortran)
 	CFLAGS = $(OPT) 
 else
-	CFLAGS = $(OPT) -qopt-report=5 -assume byterecl -xHost -align array64byte
+	CFLAGS = $(OPT) -g -qopt-report=5 -assume byterecl -xHost -align array64byte
 endif
 
 #INC = 
 
-SRCS = swerbf-test.f90
+SRCS = swerbf-test_serial.f90
 
 #LIB = 
 
-EXE = swe
+EXE = swe_serial.exe
 
 all: $(SRCS) 
 	$(CC) $(CFLAGS) $(SRCS) -o $(EXE)
 
 clean: 
-	rm ./swe *.mod *.optrpt
+	rm swe *.mod *.optrpt
