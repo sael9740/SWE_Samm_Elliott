@@ -100,7 +100,6 @@ program swe
   use coords
   use derivs
   use times
-  use omp_lib
 implicit none
 
   real*8 fcor(Nnodes)
@@ -391,6 +390,7 @@ subroutine evalCartRhs(fcor,ghm,gradghm_t,H_t,F_t, tps1, tps2)
   use dims
   use derivs
   use coords
+  use omp_lib
 implicit none
 
 real*8, intent(in)  ::  fcor(Nnodes)
