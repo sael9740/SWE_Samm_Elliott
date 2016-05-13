@@ -1,0 +1,1581 @@
+
+    Report from: Interprocedural optimizations [ipo]
+
+  WHOLE PROGRAM (SAFE) [EITHER METHOD]: false
+  WHOLE PROGRAM (SEEN) [TABLE METHOD]: true
+  WHOLE PROGRAM (READ) [OBJECT READER METHOD]: false
+
+INLINING OPTION VALUES:
+  -inline-factor: 100
+  -inline-min-size: 30
+  -inline-max-size: 230
+  -inline-max-total-size: 2000
+  -inline-max-per-routine: 10000
+  -inline-max-per-compile: 500000
+
+In the inlining report below:
+   "sz" refers to the "size" of the routine. The smaller a routine's size,
+      the more likely it is to be inlined.
+   "isz" refers to the "inlined size" of the routine. This is the amount
+      the calling routine will grow if the called routine is inlined into it.
+      The compiler generally limits the amount a routine can grow by having
+      routines inlined into it.
+
+Begin optimization report for: SWE
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (SWE) [1/12=8.3%] swerbf-test.f90(97,9)
+  -> EXTERN: (97,9) for_set_reentrancy
+  -> EXTERN: (162,3) for_open
+  -> EXTERN: (164,6) for_read_seq_lis_xmit
+  -> EXTERN: (164,6) for_read_seq_lis_xmit
+  -> EXTERN: (164,6) for_read_seq_lis
+  -> EXTERN: (166,9) for_close
+  -> INLINE: (168,8) COORD_INIT (isz = 688) (sz = 693)
+    -> INLINE: (287,8) CART2SPH (isz = 112) (sz = 129)
+      -> EXTERN: (547,14) atan2
+      -> EXTERN: (554,14) atan2
+    -> EXTERN: (313,17) sin
+    -> EXTERN: (314,17) sin
+    -> EXTERN: (314,28) cos
+    -> EXTERN: (316,17) cos
+    -> EXTERN: (317,17) sin
+    -> EXTERN: (317,28) sin
+    -> EXTERN: (320,17) cos
+  -> INLINE: (170,8) DERIV_INIT (isz = 293) (sz = 298)
+    -> EXTERN: (573,3) for_open
+    -> EXTERN: (578,8) for_read_dir
+    -> EXTERN: (582,9) for_close
+    -> EXTERN: (584,3) for_open
+    -> EXTERN: (591,8) for_read_dir
+    -> EXTERN: (599,8) for_read_dir
+    -> EXTERN: (607,8) for_read_dir
+    -> EXTERN: (615,8) for_read_dir
+    -> EXTERN: (630,9) for_close
+  -> INLINE: (172,8) TC5 (isz = 245) (sz = 256)
+  -> EXTERN: (192,8) for_cpusec_t
+  -> EXTERN: (201,12) for_cpusec_t
+  -> (202,12) EVALCARTRHS (isz = 298) (sz = 315)
+     [[ Inlining would exceed -inline-max-size value (315>253) <1>]]
+  -> EXTERN: (203,12) for_cpusec_t
+  -> EXTERN: (209,12) for_cpusec_t
+  -> (210,12) EVALCARTRHS (isz = 298) (sz = 315)
+     [[ Inlining would exceed -inline-max-size value (315>253) <1>]]
+  -> EXTERN: (211,12) for_cpusec_t
+  -> EXTERN: (217,12) for_cpusec_t
+  -> (218,12) EVALCARTRHS (isz = 298) (sz = 315)
+     [[ Inlining would exceed -inline-max-size value (315>230) <1>]]
+  -> EXTERN: (219,12) for_cpusec_t
+  -> EXTERN: (225,12) for_cpusec_t
+  -> (226,12) EVALCARTRHS (isz = 298) (sz = 315)
+     [[ Inlining would exceed -inline-max-size value (315>230) <1>]]
+  -> EXTERN: (227,12) for_cpusec_t
+  -> EXTERN: (234,8) for_cpusec_t
+  -> EXTERN: (247,3) for_write_seq_lis_xmit
+  -> EXTERN: (247,3) for_write_seq_lis
+  -> EXTERN: (248,3) for_write_seq_lis_xmit
+  -> EXTERN: (248,3) for_write_seq_lis
+  -> EXTERN: (249,3) for_write_seq_lis_xmit
+  -> EXTERN: (249,3) for_write_seq_lis
+  -> EXTERN: (250,3) for_write_seq_lis_xmit
+  -> EXTERN: (250,3) for_write_seq_lis
+  -> EXTERN: (253,3) for_open
+  -> EXTERN: (260,8) for_read_dir
+  -> EXTERN: (263,10) for_write_seq_lis_xmit
+  -> EXTERN: (263,10) for_write_seq_lis
+  -> EXTERN: (270,9) for_close
+  -> EXTERN: (273,3) for_write_seq_lis
+
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at swerbf-test.f90(163,3)
+   remark #15382: vectorization support: call to function for_read_seq_lis cannot be vectorized   [ swerbf-test.f90(164,6) ]
+   remark #15382: vectorization support: call to function for_read_seq_lis_xmit cannot be vectorized   [ swerbf-test.f90(164,6) ]
+   remark #15382: vectorization support: call to function for_read_seq_lis_xmit cannot be vectorized   [ swerbf-test.f90(164,6) ]
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed FLOW dependence between 47 line 164 and 47 line 164
+   remark #15346: vector dependence: assumed ANTI dependence between 47 line 164 and 47 line 164
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(283,3) inlined into swerbf-test.f90(168,8)
+   remark #25401: memcopy(with guard) generated
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at swerbf-test.f90(283,3) inlined into swerbf-test.f90(168,8)
+   <Multiversioned v2>
+      remark #15388: vectorization support: reference coords_mp_x_ has aligned access
+      remark #15388: vectorization support: reference nodes has aligned access
+      remark #15300: LOOP WAS VECTORIZED
+      remark #15448: unmasked aligned unit stride loads: 1 
+      remark #15449: unmasked aligned unit stride stores: 1 
+      remark #15475: --- begin vector loop cost summary ---
+      remark #15476: scalar loop cost: 4 
+      remark #15477: vector loop cost: 1.500 
+      remark #15478: estimated potential speedup: 2.660 
+      remark #15479: lightweight vector operations: 2 
+      remark #15480: medium-overhead vector operations: 1 
+      remark #15488: --- end vector loop cost summary ---
+      remark #25015: Estimate of max trip count of loop=81921
+   LOOP END
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(284,3) inlined into swerbf-test.f90(168,8)
+   remark #25401: memcopy(with guard) generated
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at swerbf-test.f90(284,3) inlined into swerbf-test.f90(168,8)
+   <Multiversioned v2>
+      remark #15388: vectorization support: reference coords_mp_y_ has aligned access
+      remark #15388: vectorization support: reference nodes has aligned access
+      remark #15300: LOOP WAS VECTORIZED
+      remark #15448: unmasked aligned unit stride loads: 1 
+      remark #15449: unmasked aligned unit stride stores: 1 
+      remark #15475: --- begin vector loop cost summary ---
+      remark #15476: scalar loop cost: 4 
+      remark #15477: vector loop cost: 1.500 
+      remark #15478: estimated potential speedup: 2.660 
+      remark #15479: lightweight vector operations: 2 
+      remark #15480: medium-overhead vector operations: 1 
+      remark #15488: --- end vector loop cost summary ---
+      remark #25015: Estimate of max trip count of loop=81921
+   LOOP END
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(285,3) inlined into swerbf-test.f90(168,8)
+   remark #25401: memcopy(with guard) generated
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at swerbf-test.f90(285,3) inlined into swerbf-test.f90(168,8)
+   <Multiversioned v2>
+      remark #15388: vectorization support: reference z has aligned access
+      remark #15388: vectorization support: reference nodes has aligned access
+      remark #15300: LOOP WAS VECTORIZED
+      remark #15448: unmasked aligned unit stride loads: 1 
+      remark #15449: unmasked aligned unit stride stores: 1 
+      remark #15475: --- begin vector loop cost summary ---
+      remark #15476: scalar loop cost: 4 
+      remark #15477: vector loop cost: 1.500 
+      remark #15478: estimated potential speedup: 2.660 
+      remark #15479: lightweight vector operations: 2 
+      remark #15480: medium-overhead vector operations: 1 
+      remark #15488: --- end vector loop cost summary ---
+      remark #25015: Estimate of max trip count of loop=81921
+   LOOP END
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(545,3) inlined into swerbf-test.f90(168,8)
+   remark #25427: Loop Statements Reordered
+   remark #15388: vectorization support: reference z has aligned access   [ swerbf-test.f90(554,14) ]
+   remark #15388: vectorization support: reference coords_mp_x_ has aligned access   [ swerbf-test.f90(554,14) ]
+   remark #15388: vectorization support: reference coords_mp_x_ has aligned access   [ swerbf-test.f90(554,14) ]
+   remark #15388: vectorization support: reference coords_mp_y_ has aligned access   [ swerbf-test.f90(554,14) ]
+   remark #15388: vectorization support: reference coords_mp_y_ has aligned access   [ swerbf-test.f90(554,14) ]
+   remark #15388: vectorization support: reference coords_mp_th_ has aligned access   [ swerbf-test.f90(554,6) ]
+   remark #15388: vectorization support: reference coords_mp_y_ has aligned access   [ swerbf-test.f90(547,14) ]
+   remark #15388: vectorization support: reference coords_mp_x_ has aligned access   [ swerbf-test.f90(547,14) ]
+   remark #15388: vectorization support: reference coords_mp_la_ has aligned access   [ swerbf-test.f90(547,6) ]
+   remark #15388: vectorization support: reference coords_mp_la_ has aligned access   [ swerbf-test.f90(549,9) ]
+   remark #15388: vectorization support: reference coords_mp_la_ has aligned access   [ swerbf-test.f90(549,9) ]
+   remark #15412: vectorization support: streaming store was generated for coords_mp_th_   [ swerbf-test.f90(554,6) ]
+   remark #15412: vectorization support: streaming store was generated for coords_mp_la_   [ swerbf-test.f90(547,6) ]
+   remark #15300: LOOP WAS VECTORIZED
+   remark #15448: unmasked aligned unit stride loads: 9 
+   remark #15449: unmasked aligned unit stride stores: 3 
+   remark #15467: unmasked aligned streaming stores: 2 
+   remark #15475: --- begin vector loop cost summary ---
+   remark #15476: scalar loop cost: 289 
+   remark #15477: vector loop cost: 103.500 
+   remark #15478: estimated potential speedup: 2.790 
+   remark #15479: lightweight vector operations: 32 
+   remark #15480: medium-overhead vector operations: 3 
+   remark #15482: vectorized math library calls: 2 
+   remark #15488: --- end vector loop cost summary ---
+   remark #25456: Number of Array Refs Scalar Replaced In Loop: 6
+   remark #25015: Estimate of max trip count of loop=81921
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(292,3) inlined into swerbf-test.f90(168,8)
+   remark #25045: Fused Loops: ( 292 293 294 296 297 298 300 301 302 )
+
+   remark #15388: vectorization support: reference coords_mp_p_u_ has aligned access
+   remark #15388: vectorization support: reference coords_mp_x_ has aligned access
+   remark #15388: vectorization support: reference coords_mp_x_ has aligned access
+   remark #15388: vectorization support: reference coords_mp_p_u_ has aligned access   [ swerbf-test.f90(293,3) ]
+   remark #15388: vectorization support: reference coords_mp_x_ has aligned access   [ swerbf-test.f90(293,3) ]
+   remark #15388: vectorization support: reference coords_mp_y_ has aligned access   [ swerbf-test.f90(293,3) ]
+   remark #15388: vectorization support: reference coords_mp_p_u_ has aligned access   [ swerbf-test.f90(294,3) ]
+   remark #15388: vectorization support: reference coords_mp_x_ has aligned access   [ swerbf-test.f90(294,3) ]
+   remark #15388: vectorization support: reference z has aligned access   [ swerbf-test.f90(294,3) ]
+   remark #15388: vectorization support: reference coords_mp_p_v_ has aligned access   [ swerbf-test.f90(296,3) ]
+   remark #15388: vectorization support: reference coords_mp_x_ has aligned access   [ swerbf-test.f90(296,3) ]
+   remark #15388: vectorization support: reference coords_mp_y_ has aligned access   [ swerbf-test.f90(296,3) ]
+   remark #15388: vectorization support: reference coords_mp_p_v_ has aligned access   [ swerbf-test.f90(297,3) ]
+   remark #15388: vectorization support: reference coords_mp_y_ has aligned access   [ swerbf-test.f90(297,3) ]
+   remark #15388: vectorization support: reference coords_mp_y_ has aligned access   [ swerbf-test.f90(297,3) ]
+   remark #15388: vectorization support: reference coords_mp_p_v_ has aligned access   [ swerbf-test.f90(298,3) ]
+   remark #15388: vectorization support: reference coords_mp_y_ has aligned access   [ swerbf-test.f90(298,3) ]
+   remark #15388: vectorization support: reference z has aligned access   [ swerbf-test.f90(298,3) ]
+   remark #15388: vectorization support: reference coords_mp_p_w_ has aligned access   [ swerbf-test.f90(300,3) ]
+   remark #15388: vectorization support: reference coords_mp_x_ has aligned access   [ swerbf-test.f90(300,3) ]
+   remark #15388: vectorization support: reference z has aligned access   [ swerbf-test.f90(300,3) ]
+   remark #15388: vectorization support: reference coords_mp_p_w_ has aligned access   [ swerbf-test.f90(301,3) ]
+   remark #15388: vectorization support: reference coords_mp_y_ has aligned access   [ swerbf-test.f90(301,3) ]
+   remark #15388: vectorization support: reference z has aligned access   [ swerbf-test.f90(301,3) ]
+   remark #15388: vectorization support: reference coords_mp_p_w_ has aligned access   [ swerbf-test.f90(302,3) ]
+   remark #15388: vectorization support: reference z has aligned access   [ swerbf-test.f90(302,3) ]
+   remark #15388: vectorization support: reference z has aligned access   [ swerbf-test.f90(302,3) ]
+   remark #15412: vectorization support: streaming store was generated for coords_mp_p_u_
+   remark #15412: vectorization support: streaming store was generated for coords_mp_p_u_   [ swerbf-test.f90(293,3) ]
+   remark #15412: vectorization support: streaming store was generated for coords_mp_p_u_   [ swerbf-test.f90(294,3) ]
+   remark #15412: vectorization support: streaming store was generated for coords_mp_p_v_   [ swerbf-test.f90(296,3) ]
+   remark #15412: vectorization support: streaming store was generated for coords_mp_p_v_   [ swerbf-test.f90(297,3) ]
+   remark #15412: vectorization support: streaming store was generated for coords_mp_p_v_   [ swerbf-test.f90(298,3) ]
+   remark #15412: vectorization support: streaming store was generated for coords_mp_p_w_   [ swerbf-test.f90(300,3) ]
+   remark #15412: vectorization support: streaming store was generated for coords_mp_p_w_   [ swerbf-test.f90(301,3) ]
+   remark #15412: vectorization support: streaming store was generated for coords_mp_p_w_   [ swerbf-test.f90(302,3) ]
+   remark #15301: FUSED LOOP WAS VECTORIZED
+   remark #15448: unmasked aligned unit stride loads: 18 
+   remark #15449: unmasked aligned unit stride stores: 9 
+   remark #15467: unmasked aligned streaming stores: 9 
+   remark #15475: --- begin vector loop cost summary ---
+   remark #15476: scalar loop cost: 70 
+   remark #15477: vector loop cost: 33.000 
+   remark #15478: estimated potential speedup: 2.120 
+   remark #15479: lightweight vector operations: 56 
+   remark #15480: medium-overhead vector operations: 1 
+   remark #15488: --- end vector loop cost summary ---
+   remark #25456: Number of Array Refs Scalar Replaced In Loop: 15
+   remark #25015: Estimate of max trip count of loop=81921
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(293,3) inlined into swerbf-test.f90(168,8)
+   remark #25046: Loop lost in Fusion 
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(294,3) inlined into swerbf-test.f90(168,8)
+   remark #25046: Loop lost in Fusion 
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(296,3) inlined into swerbf-test.f90(168,8)
+   remark #25046: Loop lost in Fusion 
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(297,3) inlined into swerbf-test.f90(168,8)
+   remark #25046: Loop lost in Fusion 
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(298,3) inlined into swerbf-test.f90(168,8)
+   remark #25046: Loop lost in Fusion 
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(300,3) inlined into swerbf-test.f90(168,8)
+   remark #25046: Loop lost in Fusion 
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(301,3) inlined into swerbf-test.f90(168,8)
+   remark #25046: Loop lost in Fusion 
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(302,3) inlined into swerbf-test.f90(168,8)
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(306,3) inlined into swerbf-test.f90(168,8)
+   remark #25101: Loop Interchange not done due to: Original Order seems proper
+   remark #25452: Original Order found to be proper, but by a close margin
+   remark #25045: Fused Loops: ( 306 307 308 )
+
+   remark #15389: vectorization support: reference coords_mp_p_u_ has unaligned access
+   remark #15389: vectorization support: reference coords_mp_p_v_ has unaligned access   [ swerbf-test.f90(307,3) ]
+   remark #15389: vectorization support: reference coords_mp_p_w_ has unaligned access   [ swerbf-test.f90(308,3) ]
+   remark #15381: vectorization support: unaligned access used inside loop body   [ swerbf-test.f90(308,3) ]
+   remark #15301: FUSED LOOP WAS VECTORIZED
+   remark #15450: unmasked unaligned unit stride loads: 3 
+   remark #15462: unmasked indexed (or gather) loads: 3 
+   remark #15475: --- begin vector loop cost summary ---
+   remark #15476: scalar loop cost: 11 
+   remark #15477: vector loop cost: 9.500 
+   remark #15478: estimated potential speedup: 1.150 
+   remark #15479: lightweight vector operations: 8 
+   remark #15480: medium-overhead vector operations: 1 
+   remark #15481: heavy-overhead vector operations: 1 
+   remark #15488: --- end vector loop cost summary ---
+   remark #25015: Estimate of max trip count of loop=81921
+
+   LOOP BEGIN at swerbf-test.f90(306,3) inlined into swerbf-test.f90(168,8)
+      remark #25045: Fused Loops: ( 306 307 308 )
+
+      remark #15389: vectorization support: reference coords_mp_p_u_t_ has unaligned access
+      remark #15389: vectorization support: reference coords_mp_p_v_t_ has unaligned access   [ swerbf-test.f90(307,3) ]
+      remark #15389: vectorization support: reference coords_mp_p_w_t_ has unaligned access   [ swerbf-test.f90(308,3) ]
+      remark #15381: vectorization support: unaligned access used inside loop body   [ swerbf-test.f90(308,3) ]
+      remark #15335: loop was not vectorized: vectorization possible but seems inefficient. Use vector always directive or -vec-threshold0 to override 
+      remark #15451: unmasked unaligned unit stride stores: 3 
+      remark #15460: masked strided loads: 3 
+      remark #15475: --- begin vector loop cost summary ---
+      remark #15476: scalar loop cost: 11 
+      remark #15477: vector loop cost: 10.500 
+      remark #15478: estimated potential speedup: 0.800 
+      remark #15479: lightweight vector operations: 7 
+      remark #15480: medium-overhead vector operations: 1 
+      remark #15481: heavy-overhead vector operations: 1 
+      remark #15488: --- end vector loop cost summary ---
+   LOOP END
+
+   LOOP BEGIN at swerbf-test.f90(307,3) inlined into swerbf-test.f90(168,8)
+      remark #25046: Loop lost in Fusion 
+   LOOP END
+
+   LOOP BEGIN at swerbf-test.f90(308,3) inlined into swerbf-test.f90(168,8)
+   LOOP END
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(307,3) inlined into swerbf-test.f90(168,8)
+   remark #25101: Loop Interchange not done due to: Original Order seems proper
+   remark #25452: Original Order found to be proper, but by a close margin
+   remark #25046: Loop lost in Fusion 
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(308,3) inlined into swerbf-test.f90(168,8)
+   remark #25101: Loop Interchange not done due to: Original Order seems proper
+   remark #25452: Original Order found to be proper, but by a close margin
+   remark #25046: Loop lost in Fusion 
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(578,8) inlined into swerbf-test.f90(170,8)
+   remark #15382: vectorization support: call to function for_read_dir cannot be vectorized
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 578 and 433 line 578
+   remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 578 and 433 line 578
+
+   LOOP BEGIN at swerbf-test.f90(577,6) inlined into swerbf-test.f90(170,8)
+      remark #15382: vectorization support: call to function for_read_dir cannot be vectorized   [ swerbf-test.f90(578,8) ]
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+      remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 578 and 433 line 578
+      remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 578 and 433 line 578
+   LOOP END
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(589,3) inlined into swerbf-test.f90(170,8)
+   remark #15382: vectorization support: call to function for_read_dir cannot be vectorized   [ swerbf-test.f90(591,8) ]
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 591 and 433 line 591
+   remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 591 and 433 line 591
+
+   LOOP BEGIN at swerbf-test.f90(590,6) inlined into swerbf-test.f90(170,8)
+      remark #15382: vectorization support: call to function for_read_dir cannot be vectorized   [ swerbf-test.f90(591,8) ]
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+      remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 591 and 433 line 591
+      remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 591 and 433 line 591
+   LOOP END
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(597,3) inlined into swerbf-test.f90(170,8)
+   remark #15382: vectorization support: call to function for_read_dir cannot be vectorized   [ swerbf-test.f90(599,8) ]
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 599 and 433 line 599
+   remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 599 and 433 line 599
+
+   LOOP BEGIN at swerbf-test.f90(598,6) inlined into swerbf-test.f90(170,8)
+      remark #15382: vectorization support: call to function for_read_dir cannot be vectorized   [ swerbf-test.f90(599,8) ]
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+      remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 599 and 433 line 599
+      remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 599 and 433 line 599
+   LOOP END
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(605,3) inlined into swerbf-test.f90(170,8)
+   remark #15382: vectorization support: call to function for_read_dir cannot be vectorized   [ swerbf-test.f90(607,8) ]
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 607 and 433 line 607
+   remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 607 and 433 line 607
+
+   LOOP BEGIN at swerbf-test.f90(606,6) inlined into swerbf-test.f90(170,8)
+      remark #15382: vectorization support: call to function for_read_dir cannot be vectorized   [ swerbf-test.f90(607,8) ]
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+      remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 607 and 433 line 607
+      remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 607 and 433 line 607
+   LOOP END
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(613,3) inlined into swerbf-test.f90(170,8)
+   remark #15382: vectorization support: call to function for_read_dir cannot be vectorized   [ swerbf-test.f90(615,8) ]
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 615 and 433 line 615
+   remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 615 and 433 line 615
+
+   LOOP BEGIN at swerbf-test.f90(614,6) inlined into swerbf-test.f90(170,8)
+      remark #15382: vectorization support: call to function for_read_dir cannot be vectorized   [ swerbf-test.f90(615,8) ]
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+      remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 615 and 433 line 615
+      remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 615 and 433 line 615
+   LOOP END
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(626,20) inlined into swerbf-test.f90(170,8)
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at swerbf-test.f90(622,6) inlined into swerbf-test.f90(170,8)
+      remark #15388: vectorization support: reference derivs_mp_dpx_ has aligned access   [ swerbf-test.f90(623,8) ]
+      remark #15388: vectorization support: reference derivs_mp_dpx_ has aligned access   [ swerbf-test.f90(623,8) ]
+      remark #15388: vectorization support: reference derivs_mp_dpy_ has aligned access   [ swerbf-test.f90(624,8) ]
+      remark #15388: vectorization support: reference derivs_mp_dpy_ has aligned access   [ swerbf-test.f90(624,8) ]
+      remark #15388: vectorization support: reference derivs_mp_dpz_ has aligned access   [ swerbf-test.f90(625,8) ]
+      remark #15388: vectorization support: reference derivs_mp_dpz_ has aligned access   [ swerbf-test.f90(625,8) ]
+      remark #15388: vectorization support: reference derivs_mp_lmat_ has aligned access   [ swerbf-test.f90(626,8) ]
+      remark #15388: vectorization support: reference derivs_mp_lmat_ has aligned access   [ swerbf-test.f90(626,8) ]
+      remark #15300: LOOP WAS VECTORIZED
+      remark #15448: unmasked aligned unit stride loads: 4 
+      remark #15449: unmasked aligned unit stride stores: 4 
+      remark #15475: --- begin vector loop cost summary ---
+      remark #15476: scalar loop cost: 97 
+      remark #15477: vector loop cost: 55.500 
+      remark #15478: estimated potential speedup: 1.700 
+      remark #15479: lightweight vector operations: 19 
+      remark #15480: medium-overhead vector operations: 1 
+      remark #15488: --- end vector loop cost summary ---
+      remark #25015: Estimate of max trip count of loop=15
+   LOOP END
+
+   LOOP BEGIN at swerbf-test.f90(622,6) inlined into swerbf-test.f90(170,8)
+   <Remainder>
+      remark #25436: completely unrolled by 1  
+   LOOP END
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(352,3) inlined into swerbf-test.f90(172,8)
+   remark #25408: memset generated
+   remark #15398: loop was not vectorized: loop was transformed to memset or memcpy
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(353,3) inlined into swerbf-test.f90(172,8)
+   remark #25045: Fused Loops: ( 353 355 )
+
+   remark #15388: vectorization support: reference coords_mp_la_ has aligned access   [ swerbf-test.f90(353,24) ]
+   remark #15388: vectorization support: reference coords_mp_th_ has aligned access   [ swerbf-test.f90(353,43) ]
+   remark #15388: vectorization support: reference R2 has aligned access
+   remark #15388: vectorization support: reference ghm has aligned access   [ swerbf-test.f90(355,5) ]
+   remark #15388: vectorization support: reference R2 has aligned access   [ swerbf-test.f90(355,5) ]
+   remark #15412: vectorization support: streaming store was generated for R2
+   remark #15301: FUSED LOOP WAS VECTORIZED
+   remark #15448: unmasked aligned unit stride loads: 4 
+   remark #15449: unmasked aligned unit stride stores: 1 
+   remark #15467: unmasked aligned streaming stores: 1 
+   remark #15475: --- begin vector loop cost summary ---
+   remark #15476: scalar loop cost: 91 
+   remark #15477: vector loop cost: 63.500 
+   remark #15478: estimated potential speedup: 1.430 
+   remark #15479: lightweight vector operations: 35 
+   remark #15480: medium-overhead vector operations: 1 
+   remark #15488: --- end vector loop cost summary ---
+   remark #25015: Estimate of max trip count of loop=81921
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(355,5) inlined into swerbf-test.f90(172,8)
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(363,3) inlined into swerbf-test.f90(172,8)
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at swerbf-test.f90(367,6) inlined into swerbf-test.f90(172,8)
+      remark #15388: vectorization support: reference derivs_mp_dpx_ has aligned access   [ swerbf-test.f90(368,9) ]
+      remark #15389: vectorization support: reference derivs_mp_idx_ has unaligned access   [ swerbf-test.f90(368,9) ]
+      remark #15388: vectorization support: reference derivs_mp_dpy_ has aligned access   [ swerbf-test.f90(369,9) ]
+      remark #15389: vectorization support: reference derivs_mp_idx_ has unaligned access   [ swerbf-test.f90(369,9) ]
+      remark #15388: vectorization support: reference derivs_mp_dpz_ has aligned access   [ swerbf-test.f90(370,9) ]
+      remark #15389: vectorization support: reference derivs_mp_idx_ has unaligned access   [ swerbf-test.f90(370,9) ]
+      remark #15381: vectorization support: unaligned access used inside loop body   [ swerbf-test.f90(370,9) ]
+      remark #15300: LOOP WAS VECTORIZED
+      remark #15448: unmasked aligned unit stride loads: 3 
+      remark #15450: unmasked unaligned unit stride loads: 3 
+      remark #15458: masked indexed (or gather) loads: 3 
+      remark #15475: --- begin vector loop cost summary ---
+      remark #15476: scalar loop cost: 31 
+      remark #15477: vector loop cost: 22.500 
+      remark #15478: estimated potential speedup: 1.240 
+      remark #15479: lightweight vector operations: 22 
+      remark #15480: medium-overhead vector operations: 2 
+      remark #15488: --- end vector loop cost summary ---
+      remark #25015: Estimate of max trip count of loop=15
+   LOOP END
+
+   LOOP BEGIN at swerbf-test.f90(367,6) inlined into swerbf-test.f90(172,8)
+   <Remainder>
+      remark #25436: completely unrolled by 1  
+   LOOP END
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(381,3) inlined into swerbf-test.f90(172,8)
+   remark #25045: Fused Loops: ( 381 382 383 384 )
+
+   remark #25427: Loop Statements Reordered
+   remark #15388: vectorization support: reference uc has aligned access   [ swerbf-test.f90(382,3) ]
+   remark #15388: vectorization support: reference coords_mp_y_ has aligned access   [ swerbf-test.f90(382,3) ]
+   remark #15388: vectorization support: reference uc has aligned access   [ swerbf-test.f90(383,3) ]
+   remark #15388: vectorization support: reference coords_mp_x_ has aligned access   [ swerbf-test.f90(383,3) ]
+   remark #15388: vectorization support: reference uc has aligned access   [ swerbf-test.f90(384,3) ]
+   remark #15388: vectorization support: reference z has aligned access   [ swerbf-test.f90(381,75) ]
+   remark #15388: vectorization support: reference gh has aligned access
+   remark #15412: vectorization support: streaming store was generated for UC   [ swerbf-test.f90(382,3) ]
+   remark #15412: vectorization support: streaming store was generated for UC   [ swerbf-test.f90(383,3) ]
+   remark #15412: vectorization support: streaming store was generated for UC   [ swerbf-test.f90(384,3) ]
+   remark #15412: vectorization support: streaming store was generated for GH
+   remark #15301: FUSED LOOP WAS VECTORIZED
+   remark #15448: unmasked aligned unit stride loads: 3 
+   remark #15449: unmasked aligned unit stride stores: 4 
+   remark #15467: unmasked aligned streaming stores: 4 
+   remark #15475: --- begin vector loop cost summary ---
+   remark #15476: scalar loop cost: 30 
+   remark #15477: vector loop cost: 14.500 
+   remark #15478: estimated potential speedup: 2.060 
+   remark #15479: lightweight vector operations: 24 
+   remark #15480: medium-overhead vector operations: 1 
+   remark #15488: --- end vector loop cost summary ---
+   remark #25015: Estimate of max trip count of loop=81921
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(382,3) inlined into swerbf-test.f90(172,8)
+   remark #25046: Loop lost in Fusion 
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(383,3) inlined into swerbf-test.f90(172,8)
+   remark #25046: Loop lost in Fusion 
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(384,3) inlined into swerbf-test.f90(172,8)
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(174,3)
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at swerbf-test.f90(174,3)
+      remark #15388: vectorization support: reference h has aligned access
+      remark #15388: vectorization support: reference uc has aligned access
+      remark #15300: LOOP WAS VECTORIZED
+      remark #15448: unmasked aligned unit stride loads: 1 
+      remark #15449: unmasked aligned unit stride stores: 1 
+      remark #15475: --- begin vector loop cost summary ---
+      remark #15476: scalar loop cost: 4 
+      remark #15477: vector loop cost: 1.500 
+      remark #15478: estimated potential speedup: 2.660 
+      remark #15479: lightweight vector operations: 2 
+      remark #15480: medium-overhead vector operations: 1 
+      remark #15488: --- end vector loop cost summary ---
+      remark #25015: Estimate of max trip count of loop=81921
+   LOOP END
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(175,3)
+   remark #25401: memcopy(with guard) generated
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at swerbf-test.f90(175,3)
+   <Multiversioned v2>
+      remark #15388: vectorization support: reference h has aligned access
+      remark #15388: vectorization support: reference gh has aligned access
+      remark #15300: LOOP WAS VECTORIZED
+      remark #15448: unmasked aligned unit stride loads: 1 
+      remark #15449: unmasked aligned unit stride stores: 1 
+      remark #15475: --- begin vector loop cost summary ---
+      remark #15476: scalar loop cost: 4 
+      remark #15477: vector loop cost: 1.500 
+      remark #15478: estimated potential speedup: 2.660 
+      remark #15479: lightweight vector operations: 2 
+      remark #15480: medium-overhead vector operations: 1 
+      remark #15488: --- end vector loop cost summary ---
+      remark #25015: Estimate of max trip count of loop=81921
+   LOOP END
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(176,3)
+   remark #25045: Fused Loops: ( 176 182 )
+
+   remark #15388: vectorization support: reference fcor has aligned access
+   remark #15388: vectorization support: reference z has aligned access
+   remark #15388: vectorization support: reference h has aligned access   [ swerbf-test.f90(182,3) ]
+   remark #15388: vectorization support: reference h has aligned access   [ swerbf-test.f90(182,3) ]
+   remark #15388: vectorization support: reference h has aligned access   [ swerbf-test.f90(182,3) ]
+   remark #15388: vectorization support: reference h has aligned access   [ swerbf-test.f90(182,3) ]
+   remark #15412: vectorization support: streaming store was generated for FCOR
+   remark #15301: FUSED LOOP WAS VECTORIZED
+   remark #15448: unmasked aligned unit stride loads: 5 
+   remark #15449: unmasked aligned unit stride stores: 1 
+   remark #15462: unmasked indexed (or gather) loads: 4 
+   remark #15467: unmasked aligned streaming stores: 1 
+   remark #15475: --- begin vector loop cost summary ---
+   remark #15476: scalar loop cost: 21 
+   remark #15477: vector loop cost: 13.000 
+   remark #15478: estimated potential speedup: 1.610 
+   remark #15479: lightweight vector operations: 16 
+   remark #15480: medium-overhead vector operations: 1 
+   remark #15488: --- end vector loop cost summary ---
+   remark #25015: Estimate of max trip count of loop=81921
+
+   LOOP BEGIN at swerbf-test.f90(182,3)
+      remark #25436: completely unrolled by 4   (pre-vector) 
+   LOOP END
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(182,3)
+   remark #25101: Loop Interchange not done due to: Original Order seems proper
+   remark #25452: Original Order found to be proper, but by a close margin
+   remark #25046: Loop lost in Fusion 
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(183,3)
+   remark #25101: Loop Interchange not done due to: Original Order seems proper
+   remark #25452: Original Order found to be proper, but by a close margin
+   remark #15389: vectorization support: reference gradghm has unaligned access
+   remark #15381: vectorization support: unaligned access used inside loop body
+   remark #15301: OUTER LOOP WAS VECTORIZED
+   remark #15450: unmasked unaligned unit stride loads: 1 
+   remark #15462: unmasked indexed (or gather) loads: 1 
+   remark #15475: --- begin vector loop cost summary ---
+   remark #15476: scalar loop cost: 4 
+   remark #15477: vector loop cost: 3.500 
+   remark #15478: estimated potential speedup: 1.140 
+   remark #15479: lightweight vector operations: 2 
+   remark #15480: medium-overhead vector operations: 1 
+   remark #15481: heavy-overhead vector operations: 1 
+   remark #15488: --- end vector loop cost summary ---
+   remark #25015: Estimate of max trip count of loop=81921
+
+   LOOP BEGIN at swerbf-test.f90(183,3)
+      remark #15389: vectorization support: reference gradghm_t has unaligned access
+      remark #15381: vectorization support: unaligned access used inside loop body
+      remark #15335: loop was not vectorized: vectorization possible but seems inefficient. Use vector always directive or -vec-threshold0 to override 
+      remark #15451: unmasked unaligned unit stride stores: 1 
+      remark #15460: masked strided loads: 1 
+      remark #15475: --- begin vector loop cost summary ---
+      remark #15476: scalar loop cost: 4 
+      remark #15477: vector loop cost: 3.500 
+      remark #15478: estimated potential speedup: 0.850 
+      remark #15479: lightweight vector operations: 1 
+      remark #15480: medium-overhead vector operations: 1 
+      remark #15481: heavy-overhead vector operations: 1 
+      remark #15488: --- end vector loop cost summary ---
+   LOOP END
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(193,3)
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at swerbf-test.f90(199,7)
+      remark #15542: loop was not vectorized: inner loop was already vectorized
+      remark #25438: unrolled without remainder by 2  
+
+      LOOP BEGIN at swerbf-test.f90(199,7)
+         remark #25401: memcopy(with guard) generated
+         remark #25401: memcopy(with guard) generated
+         remark #15388: vectorization support: reference k_t has aligned access
+         remark #15388: vectorization support: reference h_t has aligned access
+         remark #15427: loop was completely unrolled
+         remark #15399: vectorization support: unroll factor set to 2
+         remark #15300: LOOP WAS VECTORIZED
+         remark #15448: unmasked aligned unit stride loads: 1 
+         remark #15449: unmasked aligned unit stride stores: 1 
+         remark #15475: --- begin vector loop cost summary ---
+         remark #15476: scalar loop cost: 4 
+         remark #15477: vector loop cost: 3.000 
+         remark #15478: estimated potential speedup: 2.660 
+         remark #15479: lightweight vector operations: 2 
+         remark #15480: medium-overhead vector operations: 1 
+         remark #15488: --- end vector loop cost summary ---
+      LOOP END
+   LOOP END
+
+   LOOP BEGIN at swerbf-test.f90(206,7)
+      remark #25045: Fused Loops: ( 206 207 )
+
+      remark #15542: loop was not vectorized: inner loop was already vectorized
+      remark #25438: unrolled without remainder by 2  
+
+      LOOP BEGIN at swerbf-test.f90(206,7)
+         remark #25045: Fused Loops: ( 206 207 )
+
+         remark #15388: vectorization support: reference d1 has aligned access
+         remark #15388: vectorization support: reference f_t has aligned access
+         remark #15388: vectorization support: reference k_t has aligned access   [ swerbf-test.f90(207,7) ]
+         remark #15388: vectorization support: reference h_t has aligned access   [ swerbf-test.f90(207,7) ]
+         remark #15388: vectorization support: reference d1 has aligned access   [ swerbf-test.f90(207,7) ]
+         remark #15427: loop was completely unrolled
+         remark #15399: vectorization support: unroll factor set to 2
+         remark #15300: LOOP WAS VECTORIZED
+         remark #15448: unmasked aligned unit stride loads: 3 
+         remark #15449: unmasked aligned unit stride stores: 2 
+         remark #15475: --- begin vector loop cost summary ---
+         remark #15476: scalar loop cost: 15 
+         remark #15477: vector loop cost: 14.000 
+         remark #15478: estimated potential speedup: 2.140 
+         remark #15479: lightweight vector operations: 11 
+         remark #15480: medium-overhead vector operations: 1 
+         remark #15488: --- end vector loop cost summary ---
+      LOOP END
+
+      LOOP BEGIN at swerbf-test.f90(207,7)
+      LOOP END
+   LOOP END
+
+   LOOP BEGIN at swerbf-test.f90(207,7)
+   LOOP END
+
+   LOOP BEGIN at swerbf-test.f90(214,7)
+      remark #25045: Fused Loops: ( 214 215 )
+
+      remark #15542: loop was not vectorized: inner loop was already vectorized
+      remark #25438: unrolled without remainder by 2  
+
+      LOOP BEGIN at swerbf-test.f90(214,7)
+         remark #25045: Fused Loops: ( 214 215 )
+
+         remark #15388: vectorization support: reference d2 has aligned access
+         remark #15388: vectorization support: reference f_t has aligned access
+         remark #15388: vectorization support: reference k_t has aligned access   [ swerbf-test.f90(215,7) ]
+         remark #15388: vectorization support: reference h_t has aligned access   [ swerbf-test.f90(215,7) ]
+         remark #15388: vectorization support: reference d2 has aligned access   [ swerbf-test.f90(215,7) ]
+         remark #15427: loop was completely unrolled
+         remark #15399: vectorization support: unroll factor set to 2
+         remark #15300: LOOP WAS VECTORIZED
+         remark #15448: unmasked aligned unit stride loads: 3 
+         remark #15449: unmasked aligned unit stride stores: 2 
+         remark #15475: --- begin vector loop cost summary ---
+         remark #15476: scalar loop cost: 15 
+         remark #15477: vector loop cost: 14.000 
+         remark #15478: estimated potential speedup: 2.140 
+         remark #15479: lightweight vector operations: 11 
+         remark #15480: medium-overhead vector operations: 1 
+         remark #15488: --- end vector loop cost summary ---
+      LOOP END
+
+      LOOP BEGIN at swerbf-test.f90(215,7)
+      LOOP END
+   LOOP END
+
+   LOOP BEGIN at swerbf-test.f90(215,7)
+   LOOP END
+
+   LOOP BEGIN at swerbf-test.f90(222,7)
+      remark #25045: Fused Loops: ( 222 223 )
+
+      remark #15542: loop was not vectorized: inner loop was already vectorized
+      remark #25438: unrolled without remainder by 2  
+
+      LOOP BEGIN at swerbf-test.f90(222,7)
+         remark #25045: Fused Loops: ( 222 223 )
+
+         remark #15388: vectorization support: reference d3 has aligned access
+         remark #15388: vectorization support: reference f_t has aligned access
+         remark #15388: vectorization support: reference k_t has aligned access   [ swerbf-test.f90(223,7) ]
+         remark #15388: vectorization support: reference h_t has aligned access   [ swerbf-test.f90(223,7) ]
+         remark #15388: vectorization support: reference d3 has aligned access   [ swerbf-test.f90(223,7) ]
+         remark #15427: loop was completely unrolled
+         remark #15399: vectorization support: unroll factor set to 2
+         remark #15300: LOOP WAS VECTORIZED
+         remark #15448: unmasked aligned unit stride loads: 3 
+         remark #15449: unmasked aligned unit stride stores: 2 
+         remark #15475: --- begin vector loop cost summary ---
+         remark #15476: scalar loop cost: 13 
+         remark #15477: vector loop cost: 11.000 
+         remark #15478: estimated potential speedup: 2.360 
+         remark #15479: lightweight vector operations: 9 
+         remark #15480: medium-overhead vector operations: 1 
+         remark #15488: --- end vector loop cost summary ---
+      LOOP END
+
+      LOOP BEGIN at swerbf-test.f90(223,7)
+      LOOP END
+   LOOP END
+
+   LOOP BEGIN at swerbf-test.f90(223,7)
+   LOOP END
+
+   LOOP BEGIN at swerbf-test.f90(230,7)
+      remark #25045: Fused Loops: ( 230 231 )
+
+      remark #15542: loop was not vectorized: inner loop was already vectorized
+
+      LOOP BEGIN at swerbf-test.f90(230,7)
+         remark #25045: Fused Loops: ( 230 231 )
+
+         remark #15388: vectorization support: reference d4 has aligned access
+         remark #15388: vectorization support: reference f_t has aligned access
+         remark #15388: vectorization support: reference h_t has aligned access   [ swerbf-test.f90(231,7) ]
+         remark #15388: vectorization support: reference h_t has aligned access   [ swerbf-test.f90(231,7) ]
+         remark #15388: vectorization support: reference d1 has aligned access   [ swerbf-test.f90(231,7) ]
+         remark #15388: vectorization support: reference d2 has aligned access   [ swerbf-test.f90(231,7) ]
+         remark #15388: vectorization support: reference d3 has aligned access   [ swerbf-test.f90(231,7) ]
+         remark #15388: vectorization support: reference d4 has aligned access   [ swerbf-test.f90(231,7) ]
+         remark #15300: LOOP WAS VECTORIZED
+         remark #15448: unmasked aligned unit stride loads: 6 
+         remark #15449: unmasked aligned unit stride stores: 2 
+         remark #15475: --- begin vector loop cost summary ---
+         remark #15476: scalar loop cost: 28 
+         remark #15477: vector loop cost: 13.000 
+         remark #15478: estimated potential speedup: 2.150 
+         remark #15479: lightweight vector operations: 21 
+         remark #15480: medium-overhead vector operations: 1 
+         remark #15488: --- end vector loop cost summary ---
+         remark #25456: Number of Array Refs Scalar Replaced In Loop: 1
+         remark #25015: Estimate of max trip count of loop=2
+      LOOP END
+
+      LOOP BEGIN at swerbf-test.f90(231,7)
+      LOOP END
+   LOOP END
+
+   LOOP BEGIN at swerbf-test.f90(231,7)
+   LOOP END
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(238,3)
+   remark #25101: Loop Interchange not done due to: Original Order seems proper
+   remark #25452: Original Order found to be proper, but by a close margin
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at swerbf-test.f90(238,3)
+      remark #15388: vectorization support: reference h has aligned access
+      remark #15300: LOOP WAS VECTORIZED
+      remark #15449: unmasked aligned unit stride stores: 1 
+      remark #15460: masked strided loads: 1 
+      remark #15475: --- begin vector loop cost summary ---
+      remark #15476: scalar loop cost: 4 
+      remark #15477: vector loop cost: 2.500 
+      remark #15478: estimated potential speedup: 1.600 
+      remark #15479: lightweight vector operations: 1 
+      remark #15480: medium-overhead vector operations: 2 
+      remark #15488: --- end vector loop cost summary ---
+      remark #25015: Estimate of max trip count of loop=81921
+   LOOP END
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(258,3)
+   remark #25096: Loop Interchange not done due to: Imperfect Loop Nest (Either at Source or due to other Compiler Transformations)
+   remark #25451: Advice: Loop Interchange, if possible, might help loopnest. Suggested Permutation: ( 1 2 ) --> ( 2 1 ) 
+   remark #15382: vectorization support: call to function for_read_dir cannot be vectorized   [ swerbf-test.f90(260,8) ]
+   remark #15382: vectorization support: call to function for_write_seq_lis cannot be vectorized   [ swerbf-test.f90(263,10) ]
+   remark #15382: vectorization support: call to function for_write_seq_lis_xmit cannot be vectorized   [ swerbf-test.f90(263,10) ]
+   remark #15382: vectorization support: call to function for_read_dir cannot be vectorized   [ swerbf-test.f90(260,8) ]
+   remark #15382: vectorization support: call to function for_write_seq_lis cannot be vectorized   [ swerbf-test.f90(263,10) ]
+   remark #15382: vectorization support: call to function for_write_seq_lis_xmit cannot be vectorized   [ swerbf-test.f90(263,10) ]
+   remark #15382: vectorization support: call to function for_read_dir cannot be vectorized   [ swerbf-test.f90(260,8) ]
+   remark #15382: vectorization support: call to function for_write_seq_lis cannot be vectorized   [ swerbf-test.f90(263,10) ]
+   remark #15382: vectorization support: call to function for_write_seq_lis_xmit cannot be vectorized   [ swerbf-test.f90(263,10) ]
+   remark #15382: vectorization support: call to function for_read_dir cannot be vectorized   [ swerbf-test.f90(260,8) ]
+   remark #15382: vectorization support: call to function for_write_seq_lis cannot be vectorized   [ swerbf-test.f90(263,10) ]
+   remark #15382: vectorization support: call to function for_write_seq_lis_xmit cannot be vectorized   [ swerbf-test.f90(263,10) ]
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed FLOW dependence between 47 line 260 and 47 line 263
+   remark #15346: vector dependence: assumed ANTI dependence between 47 line 263 and 47 line 260
+
+   LOOP BEGIN at swerbf-test.f90(259,6)
+      remark #25436: completely unrolled by 4   (pre-vector) 
+   LOOP END
+LOOP END
+
+    Report from: Code generation optimizations [cg]
+
+remark #34001: call to memcpy implemented as a call to optimized library version
+remark #34001: call to memcpy implemented as a call to optimized library version
+remark #34001: call to memcpy implemented as a call to optimized library version
+remark #34001: call to memset implemented as a call to optimized library version
+remark #34001: call to memcpy implemented as a call to optimized library version
+===========================================================================
+
+Begin optimization report for: EVALCARTRHS
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (EVALCARTRHS) [2/12=16.7%] swerbf-test.f90(388,12)
+  -> EXTERN: (431,6) for_cpusec_t
+  -> EXTERN: (457,6) for_cpusec_t
+  -> EXTERN: (467,6) for_cpusec_t
+  -> EXTERN: (520,6) for_cpusec_t
+
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at swerbf-test.f90(432,1)
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at swerbf-test.f90(439,4)
+      remark #15542: loop was not vectorized: inner loop was already vectorized
+
+      LOOP BEGIN at swerbf-test.f90(444,7)
+         remark #15388: vectorization support: reference derivs_mp_dpx_ has aligned access   [ swerbf-test.f90(445,10) ]
+         remark #15389: vectorization support: reference derivs_mp_idx_ has unaligned access   [ swerbf-test.f90(445,10) ]
+         remark #15389: vectorization support: reference derivs_mp_idx_ has unaligned access   [ swerbf-test.f90(445,10) ]
+         remark #15388: vectorization support: reference derivs_mp_dpy_ has aligned access   [ swerbf-test.f90(446,10) ]
+         remark #15389: vectorization support: reference derivs_mp_idx_ has unaligned access   [ swerbf-test.f90(446,10) ]
+         remark #15389: vectorization support: reference derivs_mp_idx_ has unaligned access   [ swerbf-test.f90(446,10) ]
+         remark #15388: vectorization support: reference derivs_mp_dpz_ has aligned access   [ swerbf-test.f90(447,10) ]
+         remark #15389: vectorization support: reference derivs_mp_idx_ has unaligned access   [ swerbf-test.f90(447,10) ]
+         remark #15389: vectorization support: reference derivs_mp_idx_ has unaligned access   [ swerbf-test.f90(447,10) ]
+         remark #15388: vectorization support: reference lmat has aligned access   [ swerbf-test.f90(448,10) ]
+         remark #15389: vectorization support: reference derivs_mp_idx_ has unaligned access   [ swerbf-test.f90(448,10) ]
+         remark #15389: vectorization support: reference derivs_mp_idx_ has unaligned access   [ swerbf-test.f90(448,10) ]
+         remark #15381: vectorization support: unaligned access used inside loop body   [ swerbf-test.f90(448,10) ]
+         remark #15300: LOOP WAS VECTORIZED
+         remark #15448: unmasked aligned unit stride loads: 4 
+         remark #15450: unmasked unaligned unit stride loads: 4 
+         remark #15458: masked indexed (or gather) loads: 4 
+         remark #15475: --- begin vector loop cost summary ---
+         remark #15476: scalar loop cost: 43 
+         remark #15477: vector loop cost: 34.000 
+         remark #15478: estimated potential speedup: 1.150 
+         remark #15479: lightweight vector operations: 38 
+         remark #15480: medium-overhead vector operations: 2 
+         remark #15488: --- end vector loop cost summary ---
+         remark #25015: Estimate of max trip count of loop=15
+      LOOP END
+
+      LOOP BEGIN at swerbf-test.f90(444,7)
+      <Remainder>
+         remark #25436: completely unrolled by 1  
+      LOOP END
+   LOOP END
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(468,1)
+   remark #15388: vectorization support: reference fcor has aligned access   [ swerbf-test.f90(494,4) ]
+   remark #15388: vectorization support: reference coords_mp_y_ has aligned access   [ swerbf-test.f90(494,4) ]
+   remark #15388: vectorization support: reference coords_mp_z_ has aligned access   [ swerbf-test.f90(494,4) ]
+   remark #15388: vectorization support: reference fcor has aligned access   [ swerbf-test.f90(495,4) ]
+   remark #15388: vectorization support: reference coords_mp_z_ has aligned access   [ swerbf-test.f90(495,4) ]
+   remark #15388: vectorization support: reference coords_mp_x_ has aligned access   [ swerbf-test.f90(495,4) ]
+   remark #15388: vectorization support: reference fcor has aligned access   [ swerbf-test.f90(496,4) ]
+   remark #15388: vectorization support: reference coords_mp_x_ has aligned access   [ swerbf-test.f90(496,4) ]
+   remark #15388: vectorization support: reference coords_mp_y_ has aligned access   [ swerbf-test.f90(496,4) ]
+   remark #15388: vectorization support: reference ghm has aligned access   [ swerbf-test.f90(516,4) ]
+   remark #15300: LOOP WAS VECTORIZED
+   remark #15448: unmasked aligned unit stride loads: 8 
+   remark #15460: masked strided loads: 32 
+   remark #15462: unmasked indexed (or gather) loads: 4 
+   remark #15475: --- begin vector loop cost summary ---
+   remark #15476: scalar loop cost: 247 
+   remark #15477: vector loop cost: 163.000 
+   remark #15478: estimated potential speedup: 1.510 
+   remark #15479: lightweight vector operations: 202 
+   remark #15480: medium-overhead vector operations: 2 
+   remark #15488: --- end vector loop cost summary ---
+   remark #25015: Estimate of max trip count of loop=81921
+LOOP END
+===========================================================================
+
+Begin optimization report for: phys._
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (phys._) [3/12=25.0%] swerbf-test.f90(5,8)
+
+===========================================================================
+
+Begin optimization report for: math._
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (math._) [4/12=33.3%] swerbf-test.f90(13,8)
+
+===========================================================================
+
+Begin optimization report for: dims._
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (dims._) [5/12=41.7%] swerbf-test.f90(19,8)
+
+===========================================================================
+
+Begin optimization report for: derivs._
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (derivs._) [6/12=50.0%] swerbf-test.f90(26,8)
+
+===========================================================================
+
+Begin optimization report for: coords._
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (coords._) [7/12=58.3%] swerbf-test.f90(45,8)
+
+===========================================================================
+
+Begin optimization report for: times._
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (times._) [8/12=66.7%] swerbf-test.f90(89,8)
+
+===========================================================================
+
+Begin optimization report for: TC5
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (TC5) [9/12=75.0%] swerbf-test.f90(324,12)
+
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at swerbf-test.f90(352,3)
+   remark #25408: memset generated
+   remark #15398: loop was not vectorized: loop was transformed to memset or memcpy
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(353,3)
+   remark #25045: Fused Loops: ( 353 355 )
+
+   remark #15388: vectorization support: reference coords_mp_la_ has aligned access   [ swerbf-test.f90(353,24) ]
+   remark #15388: vectorization support: reference coords_mp_th_ has aligned access   [ swerbf-test.f90(353,43) ]
+   remark #15388: vectorization support: reference r2 has aligned access
+   remark #15388: vectorization support: reference ghm has aligned access   [ swerbf-test.f90(355,5) ]
+   remark #15388: vectorization support: reference r2 has aligned access   [ swerbf-test.f90(355,5) ]
+   remark #15412: vectorization support: streaming store was generated for R2
+   remark #15301: FUSED LOOP WAS VECTORIZED
+   remark #15448: unmasked aligned unit stride loads: 4 
+   remark #15449: unmasked aligned unit stride stores: 1 
+   remark #15467: unmasked aligned streaming stores: 1 
+   remark #15475: --- begin vector loop cost summary ---
+   remark #15476: scalar loop cost: 91 
+   remark #15477: vector loop cost: 63.500 
+   remark #15478: estimated potential speedup: 1.430 
+   remark #15479: lightweight vector operations: 35 
+   remark #15480: medium-overhead vector operations: 1 
+   remark #15488: --- end vector loop cost summary ---
+   remark #25015: Estimate of max trip count of loop=81921
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(355,5)
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(363,3)
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at swerbf-test.f90(367,6)
+      remark #15388: vectorization support: reference dpx has aligned access   [ swerbf-test.f90(368,9) ]
+      remark #15389: vectorization support: reference idx has unaligned access   [ swerbf-test.f90(368,9) ]
+      remark #15388: vectorization support: reference dpy has aligned access   [ swerbf-test.f90(369,9) ]
+      remark #15389: vectorization support: reference idx has unaligned access   [ swerbf-test.f90(369,9) ]
+      remark #15388: vectorization support: reference dpz has aligned access   [ swerbf-test.f90(370,9) ]
+      remark #15389: vectorization support: reference idx has unaligned access   [ swerbf-test.f90(370,9) ]
+      remark #15381: vectorization support: unaligned access used inside loop body   [ swerbf-test.f90(370,9) ]
+      remark #15300: LOOP WAS VECTORIZED
+      remark #15448: unmasked aligned unit stride loads: 3 
+      remark #15450: unmasked unaligned unit stride loads: 3 
+      remark #15458: masked indexed (or gather) loads: 3 
+      remark #15475: --- begin vector loop cost summary ---
+      remark #15476: scalar loop cost: 30 
+      remark #15477: vector loop cost: 22.500 
+      remark #15478: estimated potential speedup: 1.200 
+      remark #15479: lightweight vector operations: 22 
+      remark #15480: medium-overhead vector operations: 2 
+      remark #15488: --- end vector loop cost summary ---
+      remark #25015: Estimate of max trip count of loop=15
+   LOOP END
+
+   LOOP BEGIN at swerbf-test.f90(367,6)
+   <Remainder>
+      remark #25436: completely unrolled by 1  
+   LOOP END
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(381,3)
+   remark #25045: Fused Loops: ( 381 382 383 384 )
+
+   remark #25427: Loop Statements Reordered
+   remark #15388: vectorization support: reference uc has aligned access   [ swerbf-test.f90(382,3) ]
+   remark #15388: vectorization support: reference coords_mp_y_ has aligned access   [ swerbf-test.f90(382,3) ]
+   remark #15388: vectorization support: reference uc has aligned access   [ swerbf-test.f90(383,3) ]
+   remark #15388: vectorization support: reference coords_mp_x_ has aligned access   [ swerbf-test.f90(383,3) ]
+   remark #15388: vectorization support: reference uc has aligned access   [ swerbf-test.f90(384,3) ]
+   remark #15388: vectorization support: reference coords_mp_z_ has aligned access   [ swerbf-test.f90(381,75) ]
+   remark #15388: vectorization support: reference gh has aligned access
+   remark #15412: vectorization support: streaming store was generated for uc   [ swerbf-test.f90(382,3) ]
+   remark #15412: vectorization support: streaming store was generated for uc   [ swerbf-test.f90(383,3) ]
+   remark #15412: vectorization support: streaming store was generated for uc   [ swerbf-test.f90(384,3) ]
+   remark #15412: vectorization support: streaming store was generated for gh
+   remark #15301: FUSED LOOP WAS VECTORIZED
+   remark #15448: unmasked aligned unit stride loads: 3 
+   remark #15449: unmasked aligned unit stride stores: 4 
+   remark #15467: unmasked aligned streaming stores: 4 
+   remark #15475: --- begin vector loop cost summary ---
+   remark #15476: scalar loop cost: 30 
+   remark #15477: vector loop cost: 14.500 
+   remark #15478: estimated potential speedup: 2.060 
+   remark #15479: lightweight vector operations: 24 
+   remark #15480: medium-overhead vector operations: 1 
+   remark #15488: --- end vector loop cost summary ---
+   remark #25015: Estimate of max trip count of loop=81921
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(382,3)
+   remark #25046: Loop lost in Fusion 
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(383,3)
+   remark #25046: Loop lost in Fusion 
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(384,3)
+LOOP END
+
+    Report from: Code generation optimizations [cg]
+
+remark #34003: optimization advice for memset: increase the destination's alignment to 16 (and use __assume_aligned) to speed up library implementation
+remark #34001: call to memset implemented as a call to optimized library version
+===========================================================================
+
+Begin optimization report for: CART2SPH
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (CART2SPH) [10/12=83.3%] swerbf-test.f90(527,12)
+  -> EXTERN: (547,14) atan2
+  -> EXTERN: (554,14) atan2
+
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at swerbf-test.f90(545,3)
+   remark #25427: Loop Statements Reordered
+   remark #15388: vectorization support: reference z has aligned access   [ swerbf-test.f90(554,14) ]
+   remark #15388: vectorization support: reference x has aligned access   [ swerbf-test.f90(554,14) ]
+   remark #15388: vectorization support: reference x has aligned access   [ swerbf-test.f90(554,14) ]
+   remark #15388: vectorization support: reference y has aligned access   [ swerbf-test.f90(554,14) ]
+   remark #15388: vectorization support: reference y has aligned access   [ swerbf-test.f90(554,14) ]
+   remark #15388: vectorization support: reference th has aligned access   [ swerbf-test.f90(554,6) ]
+   remark #15388: vectorization support: reference y has aligned access   [ swerbf-test.f90(547,14) ]
+   remark #15388: vectorization support: reference x has aligned access   [ swerbf-test.f90(547,14) ]
+   remark #15388: vectorization support: reference la has aligned access   [ swerbf-test.f90(547,6) ]
+   remark #15388: vectorization support: reference la has aligned access   [ swerbf-test.f90(549,9) ]
+   remark #15388: vectorization support: reference la has aligned access   [ swerbf-test.f90(549,9) ]
+   remark #15412: vectorization support: streaming store was generated for th   [ swerbf-test.f90(554,6) ]
+   remark #15412: vectorization support: streaming store was generated for la   [ swerbf-test.f90(547,6) ]
+   remark #15300: LOOP WAS VECTORIZED
+   remark #15448: unmasked aligned unit stride loads: 9 
+   remark #15449: unmasked aligned unit stride stores: 3 
+   remark #15467: unmasked aligned streaming stores: 2 
+   remark #15475: --- begin vector loop cost summary ---
+   remark #15476: scalar loop cost: 289 
+   remark #15477: vector loop cost: 103.500 
+   remark #15478: estimated potential speedup: 2.790 
+   remark #15479: lightweight vector operations: 32 
+   remark #15480: medium-overhead vector operations: 3 
+   remark #15482: vectorized math library calls: 2 
+   remark #15488: --- end vector loop cost summary ---
+   remark #25456: Number of Array Refs Scalar Replaced In Loop: 6
+   remark #25015: Estimate of max trip count of loop=81921
+LOOP END
+===========================================================================
+
+Begin optimization report for: COORD_INIT
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (COORD_INIT) [11/12=91.7%] swerbf-test.f90(277,12)
+  -> INLINE: (287,8) CART2SPH (isz = 112) (sz = 129)
+    -> EXTERN: (547,14) atan2
+    -> EXTERN: (554,14) atan2
+  -> EXTERN: (313,17) sin
+  -> EXTERN: (314,17) sin
+  -> EXTERN: (314,28) cos
+  -> EXTERN: (316,17) cos
+  -> EXTERN: (317,17) sin
+  -> EXTERN: (317,28) sin
+  -> EXTERN: (320,17) cos
+
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at swerbf-test.f90(283,3)
+   remark #25401: memcopy(with guard) generated
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at swerbf-test.f90(283,3)
+   <Multiversioned v2>
+      remark #15388: vectorization support: reference x has aligned access
+      remark #15388: vectorization support: reference nodes has aligned access
+      remark #15300: LOOP WAS VECTORIZED
+      remark #15448: unmasked aligned unit stride loads: 1 
+      remark #15449: unmasked aligned unit stride stores: 1 
+      remark #15475: --- begin vector loop cost summary ---
+      remark #15476: scalar loop cost: 4 
+      remark #15477: vector loop cost: 1.500 
+      remark #15478: estimated potential speedup: 2.660 
+      remark #15479: lightweight vector operations: 2 
+      remark #15480: medium-overhead vector operations: 1 
+      remark #15488: --- end vector loop cost summary ---
+      remark #25015: Estimate of max trip count of loop=81921
+   LOOP END
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(284,3)
+   remark #25401: memcopy(with guard) generated
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at swerbf-test.f90(284,3)
+   <Multiversioned v2>
+      remark #15388: vectorization support: reference y has aligned access
+      remark #15388: vectorization support: reference nodes has aligned access
+      remark #15300: LOOP WAS VECTORIZED
+      remark #15448: unmasked aligned unit stride loads: 1 
+      remark #15449: unmasked aligned unit stride stores: 1 
+      remark #15475: --- begin vector loop cost summary ---
+      remark #15476: scalar loop cost: 4 
+      remark #15477: vector loop cost: 1.500 
+      remark #15478: estimated potential speedup: 2.660 
+      remark #15479: lightweight vector operations: 2 
+      remark #15480: medium-overhead vector operations: 1 
+      remark #15488: --- end vector loop cost summary ---
+      remark #25015: Estimate of max trip count of loop=81921
+   LOOP END
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(285,3)
+   remark #25401: memcopy(with guard) generated
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at swerbf-test.f90(285,3)
+   <Multiversioned v2>
+      remark #15388: vectorization support: reference coords_mp_z_ has aligned access
+      remark #15388: vectorization support: reference nodes has aligned access
+      remark #15300: LOOP WAS VECTORIZED
+      remark #15448: unmasked aligned unit stride loads: 1 
+      remark #15449: unmasked aligned unit stride stores: 1 
+      remark #15475: --- begin vector loop cost summary ---
+      remark #15476: scalar loop cost: 4 
+      remark #15477: vector loop cost: 1.500 
+      remark #15478: estimated potential speedup: 2.660 
+      remark #15479: lightweight vector operations: 2 
+      remark #15480: medium-overhead vector operations: 1 
+      remark #15488: --- end vector loop cost summary ---
+      remark #25015: Estimate of max trip count of loop=81921
+   LOOP END
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(545,3) inlined into swerbf-test.f90(287,8)
+   remark #25427: Loop Statements Reordered
+   remark #15388: vectorization support: reference coords_mp_z_ has aligned access   [ swerbf-test.f90(554,14) ]
+   remark #15388: vectorization support: reference x has aligned access   [ swerbf-test.f90(554,14) ]
+   remark #15388: vectorization support: reference x has aligned access   [ swerbf-test.f90(554,14) ]
+   remark #15388: vectorization support: reference y has aligned access   [ swerbf-test.f90(554,14) ]
+   remark #15388: vectorization support: reference y has aligned access   [ swerbf-test.f90(554,14) ]
+   remark #15388: vectorization support: reference th has aligned access   [ swerbf-test.f90(554,6) ]
+   remark #15388: vectorization support: reference y has aligned access   [ swerbf-test.f90(547,14) ]
+   remark #15388: vectorization support: reference x has aligned access   [ swerbf-test.f90(547,14) ]
+   remark #15388: vectorization support: reference la has aligned access   [ swerbf-test.f90(547,6) ]
+   remark #15388: vectorization support: reference la has aligned access   [ swerbf-test.f90(549,9) ]
+   remark #15388: vectorization support: reference la has aligned access   [ swerbf-test.f90(549,9) ]
+   remark #15412: vectorization support: streaming store was generated for coords_mp_th_   [ swerbf-test.f90(554,6) ]
+   remark #15412: vectorization support: streaming store was generated for coords_mp_la_   [ swerbf-test.f90(547,6) ]
+   remark #15300: LOOP WAS VECTORIZED
+   remark #15448: unmasked aligned unit stride loads: 9 
+   remark #15449: unmasked aligned unit stride stores: 3 
+   remark #15467: unmasked aligned streaming stores: 2 
+   remark #15475: --- begin vector loop cost summary ---
+   remark #15476: scalar loop cost: 289 
+   remark #15477: vector loop cost: 103.500 
+   remark #15478: estimated potential speedup: 2.790 
+   remark #15479: lightweight vector operations: 32 
+   remark #15480: medium-overhead vector operations: 3 
+   remark #15482: vectorized math library calls: 2 
+   remark #15488: --- end vector loop cost summary ---
+   remark #25456: Number of Array Refs Scalar Replaced In Loop: 6
+   remark #25015: Estimate of max trip count of loop=81921
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(292,3)
+   remark #25045: Fused Loops: ( 292 293 294 296 297 298 300 301 302 )
+
+   remark #15388: vectorization support: reference p_u has aligned access
+   remark #15388: vectorization support: reference x has aligned access
+   remark #15388: vectorization support: reference x has aligned access
+   remark #15388: vectorization support: reference p_u has aligned access   [ swerbf-test.f90(293,3) ]
+   remark #15388: vectorization support: reference x has aligned access   [ swerbf-test.f90(293,3) ]
+   remark #15388: vectorization support: reference y has aligned access   [ swerbf-test.f90(293,3) ]
+   remark #15388: vectorization support: reference p_u has aligned access   [ swerbf-test.f90(294,3) ]
+   remark #15388: vectorization support: reference x has aligned access   [ swerbf-test.f90(294,3) ]
+   remark #15388: vectorization support: reference coords_mp_z_ has aligned access   [ swerbf-test.f90(294,3) ]
+   remark #15388: vectorization support: reference p_v has aligned access   [ swerbf-test.f90(296,3) ]
+   remark #15388: vectorization support: reference x has aligned access   [ swerbf-test.f90(296,3) ]
+   remark #15388: vectorization support: reference y has aligned access   [ swerbf-test.f90(296,3) ]
+   remark #15388: vectorization support: reference p_v has aligned access   [ swerbf-test.f90(297,3) ]
+   remark #15388: vectorization support: reference y has aligned access   [ swerbf-test.f90(297,3) ]
+   remark #15388: vectorization support: reference y has aligned access   [ swerbf-test.f90(297,3) ]
+   remark #15388: vectorization support: reference p_v has aligned access   [ swerbf-test.f90(298,3) ]
+   remark #15388: vectorization support: reference y has aligned access   [ swerbf-test.f90(298,3) ]
+   remark #15388: vectorization support: reference coords_mp_z_ has aligned access   [ swerbf-test.f90(298,3) ]
+   remark #15388: vectorization support: reference p_w has aligned access   [ swerbf-test.f90(300,3) ]
+   remark #15388: vectorization support: reference x has aligned access   [ swerbf-test.f90(300,3) ]
+   remark #15388: vectorization support: reference coords_mp_z_ has aligned access   [ swerbf-test.f90(300,3) ]
+   remark #15388: vectorization support: reference p_w has aligned access   [ swerbf-test.f90(301,3) ]
+   remark #15388: vectorization support: reference y has aligned access   [ swerbf-test.f90(301,3) ]
+   remark #15388: vectorization support: reference coords_mp_z_ has aligned access   [ swerbf-test.f90(301,3) ]
+   remark #15388: vectorization support: reference p_w has aligned access   [ swerbf-test.f90(302,3) ]
+   remark #15388: vectorization support: reference coords_mp_z_ has aligned access   [ swerbf-test.f90(302,3) ]
+   remark #15388: vectorization support: reference coords_mp_z_ has aligned access   [ swerbf-test.f90(302,3) ]
+   remark #15412: vectorization support: streaming store was generated for coords_mp_p_u_
+   remark #15412: vectorization support: streaming store was generated for coords_mp_p_u_   [ swerbf-test.f90(293,3) ]
+   remark #15412: vectorization support: streaming store was generated for coords_mp_p_u_   [ swerbf-test.f90(294,3) ]
+   remark #15412: vectorization support: streaming store was generated for coords_mp_p_v_   [ swerbf-test.f90(296,3) ]
+   remark #15412: vectorization support: streaming store was generated for coords_mp_p_v_   [ swerbf-test.f90(297,3) ]
+   remark #15412: vectorization support: streaming store was generated for coords_mp_p_v_   [ swerbf-test.f90(298,3) ]
+   remark #15412: vectorization support: streaming store was generated for coords_mp_p_w_   [ swerbf-test.f90(300,3) ]
+   remark #15412: vectorization support: streaming store was generated for coords_mp_p_w_   [ swerbf-test.f90(301,3) ]
+   remark #15412: vectorization support: streaming store was generated for coords_mp_p_w_   [ swerbf-test.f90(302,3) ]
+   remark #15301: FUSED LOOP WAS VECTORIZED
+   remark #15448: unmasked aligned unit stride loads: 18 
+   remark #15449: unmasked aligned unit stride stores: 9 
+   remark #15467: unmasked aligned streaming stores: 9 
+   remark #15475: --- begin vector loop cost summary ---
+   remark #15476: scalar loop cost: 70 
+   remark #15477: vector loop cost: 33.000 
+   remark #15478: estimated potential speedup: 2.120 
+   remark #15479: lightweight vector operations: 56 
+   remark #15480: medium-overhead vector operations: 1 
+   remark #15488: --- end vector loop cost summary ---
+   remark #25456: Number of Array Refs Scalar Replaced In Loop: 15
+   remark #25015: Estimate of max trip count of loop=81921
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(293,3)
+   remark #25046: Loop lost in Fusion 
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(294,3)
+   remark #25046: Loop lost in Fusion 
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(296,3)
+   remark #25046: Loop lost in Fusion 
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(297,3)
+   remark #25046: Loop lost in Fusion 
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(298,3)
+   remark #25046: Loop lost in Fusion 
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(300,3)
+   remark #25046: Loop lost in Fusion 
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(301,3)
+   remark #25046: Loop lost in Fusion 
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(302,3)
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(306,3)
+   remark #25101: Loop Interchange not done due to: Original Order seems proper
+   remark #25452: Original Order found to be proper, but by a close margin
+   remark #25045: Fused Loops: ( 306 307 308 )
+
+   remark #15389: vectorization support: reference p_u has unaligned access
+   remark #15389: vectorization support: reference p_v has unaligned access   [ swerbf-test.f90(307,3) ]
+   remark #15389: vectorization support: reference p_w has unaligned access   [ swerbf-test.f90(308,3) ]
+   remark #15381: vectorization support: unaligned access used inside loop body   [ swerbf-test.f90(308,3) ]
+   remark #15301: FUSED LOOP WAS VECTORIZED
+   remark #15450: unmasked unaligned unit stride loads: 3 
+   remark #15462: unmasked indexed (or gather) loads: 3 
+   remark #15475: --- begin vector loop cost summary ---
+   remark #15476: scalar loop cost: 11 
+   remark #15477: vector loop cost: 9.500 
+   remark #15478: estimated potential speedup: 1.150 
+   remark #15479: lightweight vector operations: 8 
+   remark #15480: medium-overhead vector operations: 1 
+   remark #15481: heavy-overhead vector operations: 1 
+   remark #15488: --- end vector loop cost summary ---
+   remark #25015: Estimate of max trip count of loop=81921
+
+   LOOP BEGIN at swerbf-test.f90(306,3)
+      remark #25045: Fused Loops: ( 306 307 308 )
+
+      remark #15389: vectorization support: reference p_u_t has unaligned access
+      remark #15389: vectorization support: reference p_v_t has unaligned access   [ swerbf-test.f90(307,3) ]
+      remark #15389: vectorization support: reference p_w_t has unaligned access   [ swerbf-test.f90(308,3) ]
+      remark #15381: vectorization support: unaligned access used inside loop body   [ swerbf-test.f90(308,3) ]
+      remark #15335: loop was not vectorized: vectorization possible but seems inefficient. Use vector always directive or -vec-threshold0 to override 
+      remark #15451: unmasked unaligned unit stride stores: 3 
+      remark #15460: masked strided loads: 3 
+      remark #15475: --- begin vector loop cost summary ---
+      remark #15476: scalar loop cost: 11 
+      remark #15477: vector loop cost: 10.500 
+      remark #15478: estimated potential speedup: 0.800 
+      remark #15479: lightweight vector operations: 7 
+      remark #15480: medium-overhead vector operations: 1 
+      remark #15481: heavy-overhead vector operations: 1 
+      remark #15488: --- end vector loop cost summary ---
+   LOOP END
+
+   LOOP BEGIN at swerbf-test.f90(307,3)
+      remark #25046: Loop lost in Fusion 
+   LOOP END
+
+   LOOP BEGIN at swerbf-test.f90(308,3)
+   LOOP END
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(307,3)
+   remark #25101: Loop Interchange not done due to: Original Order seems proper
+   remark #25452: Original Order found to be proper, but by a close margin
+   remark #25046: Loop lost in Fusion 
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(308,3)
+   remark #25101: Loop Interchange not done due to: Original Order seems proper
+   remark #25452: Original Order found to be proper, but by a close margin
+   remark #25046: Loop lost in Fusion 
+LOOP END
+
+    Report from: Code generation optimizations [cg]
+
+remark #34003: optimization advice for memcpy: increase the source's alignment to 16 (and use __assume_aligned) to speed up library implementation
+remark #34001: call to memcpy implemented as a call to optimized library version
+remark #34003: optimization advice for memcpy: increase the source's alignment to 16 (and use __assume_aligned) to speed up library implementation
+remark #34001: call to memcpy implemented as a call to optimized library version
+remark #34003: optimization advice for memcpy: increase the source's alignment to 16 (and use __assume_aligned) to speed up library implementation
+remark #34001: call to memcpy implemented as a call to optimized library version
+===========================================================================
+
+Begin optimization report for: DERIV_INIT
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (DERIV_INIT) [12/12=100.0%] swerbf-test.f90(560,12)
+  -> EXTERN: (573,3) for_open
+  -> EXTERN: (578,8) for_read_dir
+  -> EXTERN: (582,9) for_close
+  -> EXTERN: (584,3) for_open
+  -> EXTERN: (591,8) for_read_dir
+  -> EXTERN: (599,8) for_read_dir
+  -> EXTERN: (607,8) for_read_dir
+  -> EXTERN: (615,8) for_read_dir
+  -> EXTERN: (630,9) for_close
+
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at swerbf-test.f90(578,8)
+   remark #15382: vectorization support: call to function for_read_dir cannot be vectorized
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 578 and 433 line 578
+   remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 578 and 433 line 578
+
+   LOOP BEGIN at swerbf-test.f90(577,6)
+      remark #15382: vectorization support: call to function for_read_dir cannot be vectorized   [ swerbf-test.f90(578,8) ]
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+      remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 578 and 433 line 578
+      remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 578 and 433 line 578
+   LOOP END
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(589,3)
+   remark #15382: vectorization support: call to function for_read_dir cannot be vectorized   [ swerbf-test.f90(591,8) ]
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 591 and 433 line 591
+   remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 591 and 433 line 591
+
+   LOOP BEGIN at swerbf-test.f90(590,6)
+      remark #15382: vectorization support: call to function for_read_dir cannot be vectorized   [ swerbf-test.f90(591,8) ]
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+      remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 591 and 433 line 591
+      remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 591 and 433 line 591
+   LOOP END
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(597,3)
+   remark #15382: vectorization support: call to function for_read_dir cannot be vectorized   [ swerbf-test.f90(599,8) ]
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 599 and 433 line 599
+   remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 599 and 433 line 599
+
+   LOOP BEGIN at swerbf-test.f90(598,6)
+      remark #15382: vectorization support: call to function for_read_dir cannot be vectorized   [ swerbf-test.f90(599,8) ]
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+      remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 599 and 433 line 599
+      remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 599 and 433 line 599
+   LOOP END
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(605,3)
+   remark #15382: vectorization support: call to function for_read_dir cannot be vectorized   [ swerbf-test.f90(607,8) ]
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 607 and 433 line 607
+   remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 607 and 433 line 607
+
+   LOOP BEGIN at swerbf-test.f90(606,6)
+      remark #15382: vectorization support: call to function for_read_dir cannot be vectorized   [ swerbf-test.f90(607,8) ]
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+      remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 607 and 433 line 607
+      remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 607 and 433 line 607
+   LOOP END
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(613,3)
+   remark #15382: vectorization support: call to function for_read_dir cannot be vectorized   [ swerbf-test.f90(615,8) ]
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 615 and 433 line 615
+   remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 615 and 433 line 615
+
+   LOOP BEGIN at swerbf-test.f90(614,6)
+      remark #15382: vectorization support: call to function for_read_dir cannot be vectorized   [ swerbf-test.f90(615,8) ]
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+      remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 615 and 433 line 615
+      remark #15346: vector dependence: assumed OUTPUT dependence between 433 line 615 and 433 line 615
+   LOOP END
+LOOP END
+
+LOOP BEGIN at swerbf-test.f90(626,20)
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at swerbf-test.f90(622,6)
+      remark #15388: vectorization support: reference derivs_mp_dpx_ has aligned access   [ swerbf-test.f90(623,8) ]
+      remark #15388: vectorization support: reference derivs_mp_dpx_ has aligned access   [ swerbf-test.f90(623,8) ]
+      remark #15388: vectorization support: reference derivs_mp_dpy_ has aligned access   [ swerbf-test.f90(624,8) ]
+      remark #15388: vectorization support: reference derivs_mp_dpy_ has aligned access   [ swerbf-test.f90(624,8) ]
+      remark #15388: vectorization support: reference derivs_mp_dpz_ has aligned access   [ swerbf-test.f90(625,8) ]
+      remark #15388: vectorization support: reference derivs_mp_dpz_ has aligned access   [ swerbf-test.f90(625,8) ]
+      remark #15388: vectorization support: reference derivs_mp_lmat_ has aligned access   [ swerbf-test.f90(626,8) ]
+      remark #15388: vectorization support: reference derivs_mp_lmat_ has aligned access   [ swerbf-test.f90(626,8) ]
+      remark #15300: LOOP WAS VECTORIZED
+      remark #15448: unmasked aligned unit stride loads: 4 
+      remark #15449: unmasked aligned unit stride stores: 4 
+      remark #15475: --- begin vector loop cost summary ---
+      remark #15476: scalar loop cost: 97 
+      remark #15477: vector loop cost: 55.500 
+      remark #15478: estimated potential speedup: 1.700 
+      remark #15479: lightweight vector operations: 19 
+      remark #15480: medium-overhead vector operations: 1 
+      remark #15488: --- end vector loop cost summary ---
+      remark #25015: Estimate of max trip count of loop=15
+   LOOP END
+
+   LOOP BEGIN at swerbf-test.f90(622,6)
+   <Remainder>
+      remark #25436: completely unrolled by 1  
+   LOOP END
+LOOP END
+===========================================================================
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINING FOOTNOTES:
+
+<1> The subprogram is larger than the inliner would normally inline.  Use the
+    option -inline-max-size to increase the size of any subprogram that would
+    normally be inlined, add "!DIR$ATTRIBUTES FORCEINLINE" to the
+    declaration of the called function, or add "!DIR$ FORCEINLINE" before
+    the call site.
+
