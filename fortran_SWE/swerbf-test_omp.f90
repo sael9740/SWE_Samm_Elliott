@@ -401,7 +401,7 @@ real*8, intent(out) ::  F_t(Nvar,Nnodes)
 real*8, intent(out) ::  tps1   ! timing variable for 1st loop
 real*8, intent(out) ::  tps2   ! timing variable for 2nd loop
 
-integer :: i, inbr, ivar, tid, debug
+integer :: i, inbr, ivar, tid, debug = 1
 
 real*8  Tx(Nvar,Nnodes)
 real*8  Ty(Nvar,Nnodes)
