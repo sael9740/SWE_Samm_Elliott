@@ -438,7 +438,7 @@ do i=1,Nnodes   ! 1st loop to be optimized
    ! 
    ! FLOPS1 = 8*Nnbr*Nvar (assumes precalculate DP{x,y,z}/a)
    !
-
+   !$omp simd
    do ivar=1,NVar
       sum1 = 0.0D0
       sum2 = 0.0D0
@@ -455,6 +455,7 @@ do i=1,Nnodes   ! 1st loop to be optimized
       Tz(ivar,i) = sum3
       HV(ivar,i) = sum4
    end do
+   !$omp end simd
 
 end do
 !$omp end do
