@@ -435,7 +435,7 @@ call cpu_time(tstart)
 !$omp do
 do i=1,Nnodes   ! 1st loop to be optimized
 
-   !$omp simd
+   !!$omp simd
    do ivar=1,NVar
       sum1 = 0.0D0
       do inbr=1,Nnbr
@@ -443,7 +443,7 @@ do i=1,Nnodes   ! 1st loop to be optimized
       end do
       Tx(ivar,i) = sum1
    end do
-   !$omp end simd
+   !!$omp end simd
 
 end do
 !$omp end do
@@ -451,7 +451,7 @@ end do
 !$omp do
 do i=1,Nnodes   ! 1st loop to be optimized
 
-!$omp simd
+!!$omp simd
 do ivar=1,NVar
 sum2 = 0.0D0
 do inbr=1,Nnbr
@@ -459,7 +459,7 @@ sum2 = sum2+DPy(inbr,i)*H_t(ivar,idx(inbr,i))
 end do
 Ty(ivar,i) = sum2
 end do
-!$omp end simd
+!!$omp end simd
 
 end do
 !$omp end do
@@ -468,7 +468,7 @@ end do
 !$omp do
 do i=1,Nnodes   ! 1st loop to be optimized
 
-!$omp simd
+!!$omp simd
 do ivar=1,NVar
 sum3 = 0.0D0
 do inbr=1,Nnbr
@@ -476,7 +476,7 @@ sum3 = sum3+DPz(inbr,i)*H_t(ivar,idx(inbr,i))
 end do
 Tz(ivar,i) = sum3
 end do
-!$omp end simd
+!!$omp end simd
 
 end do
 !$omp end do
@@ -484,7 +484,7 @@ end do
 !$omp do
 do i=1,Nnodes   ! 1st loop to be optimized
 
-!$omp simd
+!!$omp simd
 do ivar=1,NVar
 sum4 = 0.0D0
 do inbr=1,Nnbr
@@ -492,7 +492,7 @@ sum4 = sum4+Lmat(inbr,i)*H_t(ivar,idx(inbr,i))
 end do
 HV(ivar,i) = sum4
 end do
-!$omp end simd
+!!$omp end simd
 
 end do
 !$omp end do
