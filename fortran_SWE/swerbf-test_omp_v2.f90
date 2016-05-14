@@ -196,9 +196,9 @@ implicit none
       ! 
       ! Fourth Order Runge-Kutta timestepping
       !
-
+      !$omp parallel workshare
       K_t = H_t
-      
+      !$omp end
       tstart0 = omp_get_wtime()
       call evalCartRhs(fcor,ghm,gradghm_t,K_t,F_t, tps1, tps2)
       tstop0 = omp_get_wtime()
