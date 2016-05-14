@@ -196,40 +196,50 @@ implicit none
       ! 
       ! Fourth Order Runge-Kutta timestepping
       !
+
       !$omp parallel workshare
       K_t = H_t
-      !$omp end
+      !$omp end parallel workshare
+
       tstart0 = omp_get_wtime()
       call evalCartRhs(fcor,ghm,gradghm_t,K_t,F_t, tps1, tps2)
       tstop0 = omp_get_wtime()
       tps0=tps0+(tstop0-tstart0)
-      
+
+      !$omp parallel workshare
       d1=dt*F_t
       K_t = H_t + 0.5D0*d1
+      !$omp end parallel workshare
 
       tstart0 = omp_get_wtime()
       call evalCartRhs(fcor,ghm,gradghm_t,K_t,F_t, tps1, tps2)
       tstop0 = omp_get_wtime()
       tps0=tps0+(tstop0-tstart0)
 
+      !$omp parallel workshare
       d2 = dt*F_t
       K_t = H_t + 0.5D0*d2
+      !$omp end parallel workshare
       
       tstart0 = omp_get_wtime()
       call evalCartRhs(fcor,ghm,gradghm_t,K_t,F_t, tps1, tps2)
       tstop0 = omp_get_wtime()
       tps0=tps0+(tstop0-tstart0)
 
+      !$omp parallel workshare
       d3 = dt*F_t
       K_t = H_t + d3
+      !$omp end parallel workshare
       
       tstart0 = omp_get_wtime()
       call evalCartRhs(fcor,ghm,gradghm_t,K_t,F_t, tps1, tps2)
       tstop0 = omp_get_wtime()
       tps0=tps0+(tstop0-tstart0)
-      
+
+      !$omp parallel workshare
       d4 = dt*F_t
       H_t = H_t + (1.0D0/6.0D0)*(d1 + 2.0D0*d2 + 2.0D0*d3 + d4)
+      !$omp end parallel workshare
 
   end do
   tstop = omp_get_wtime()
