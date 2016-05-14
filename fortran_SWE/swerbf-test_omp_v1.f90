@@ -261,7 +261,7 @@ implicit none
        read(22, rec=recNum) tempNum
 
        if (ABS(H(i,j) - tempNum) > 1D-10) then
-         print *, H(i,j), tempNum
+         !print *, H(i,j), tempNum
        end if
  
        recNum = recNum + 1
