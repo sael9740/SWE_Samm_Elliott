@@ -435,79 +435,45 @@ call cpu_time(tstart)
 !$omp do
 do i=1,Nnodes   ! 1st loop to be optimized
 
-   !!$omp simd
-   do ivar=1,NVar
-      sum1 = 0.0D0
-      do inbr=1,Nnbr
-         sum1 = sum1+DPx(inbr,i)*H_t(ivar,idx(inbr,i))
-      end do
-      Tx(ivar,i) = sum1
-   end do
-   !!$omp end simd
+!
+! FLOPS1 = 8*Nnbr*Nvar (assumes precalculate DP{x,y,z}/a)
+!
 
-end do
-!$omp end do
-
-!$omp do
-do i=1,Nnodes   ! 1st loop to be optimized
-
-!!$omp simd
 do ivar=1,NVar
+sum1 = 0.0D0
 sum2 = 0.0D0
-do inbr=1,Nnbr
-sum2 = sum2+DPy(inbr,i)*H_t(ivar,idx(inbr,i))
-end do
-Ty(ivar,i) = sum2
-end do
-!!$omp end simd
-
-end do
-!$omp end do
-
-
-!$omp do
-do i=1,Nnodes   ! 1st loop to be optimized
-
-!!$omp simd
-do ivar=1,NVar
 sum3 = 0.0D0
-do inbr=1,Nnbr
-sum3 = sum3+DPz(inbr,i)*H_t(ivar,idx(inbr,i))
-end do
-Tz(ivar,i) = sum3
-end do
-!!$omp end simd
-
-end do
-!$omp end do
-
-!$omp do
-do i=1,Nnodes   ! 1st loop to be optimized
-
-!!$omp simd
-do ivar=1,NVar
 sum4 = 0.0D0
 do inbr=1,Nnbr
+sum1 = sum1+DPx(inbr,i)*H_t(ivar,idx(inbr,i))
+sum2 = sum2+DPy(inbr,i)*H_t(ivar,idx(inbr,i))
+sum3 = sum3+DPz(inbr,i)*H_t(ivar,idx(inbr,i))
 sum4 = sum4+Lmat(inbr,i)*H_t(ivar,idx(inbr,i))
 end do
+Tx(ivar,i) = sum1
+Ty(ivar,i) = sum2
+Tz(ivar,i) = sum3
 HV(ivar,i) = sum4
 end do
-!!$omp end simd
 
 end do
 !$omp end do
-!$omp end parallel
+!!$omp end parallel
+!$omp single
 call cpu_time(tstop)
 tps1 = tps1 + (tstop-tstart)
+
 
 ! insert communication/synchronization here
 
 !
-! This is the computation for the right hand side of the (Cartesian) 
+! This is the computation for the right hand side of the (Cartesian)
 ! momentum equations.
 !
 
 call cpu_time(tstart)
+!$omp end single
+!$omp do
 do i=1,Nnodes   ! 2nd loop to be optimized
    !
    ! FLOPS2 = 3*11
@@ -560,6 +526,8 @@ do i=1,Nnodes   ! 2nd loop to be optimized
               H_i3*(Tz_i4 - gradghm_t(3,i)) + (H_i4+gh0-ghm(i))*(Tx_i1 + Ty_i2 + Tz_i3))+HV(4,i)
 
 end do
+!$omp end do
+!$omp end parallel
 call cpu_time(tstop)
 tps2 = tps2 + (tstop-tstart)
 
