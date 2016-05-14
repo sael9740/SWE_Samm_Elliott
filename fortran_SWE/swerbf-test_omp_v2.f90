@@ -435,27 +435,64 @@ call cpu_time(tstart)
 !$omp do
 do i=1,Nnodes   ! 1st loop to be optimized
 
-   ! 
-   ! FLOPS1 = 8*Nnbr*Nvar (assumes precalculate DP{x,y,z}/a)
-   !
    !$omp simd
    do ivar=1,NVar
       sum1 = 0.0D0
-      sum2 = 0.0D0
-      sum3 = 0.0D0
-      sum4 = 0.0D0
       do inbr=1,Nnbr
          sum1 = sum1+DPx(inbr,i)*H_t(ivar,idx(inbr,i))
-         sum2 = sum2+DPy(inbr,i)*H_t(ivar,idx(inbr,i))
-         sum3 = sum3+DPz(inbr,i)*H_t(ivar,idx(inbr,i))
-         sum4 = sum4+Lmat(inbr,i)*H_t(ivar,idx(inbr,i))
       end do
       Tx(ivar,i) = sum1
-      Ty(ivar,i) = sum2
-      Tz(ivar,i) = sum3
-      HV(ivar,i) = sum4
    end do
    !$omp end simd
+
+end do
+!$omp end do
+
+!$omp do
+do i=1,Nnodes   ! 1st loop to be optimized
+
+!$omp simd
+do ivar=1,NVar
+sum2 = 0.0D0
+do inbr=1,Nnbr
+sum2 = sum2+DPy(inbr,i)*H_t(ivar,idx(inbr,i))
+end do
+Ty(ivar,i) = sum2
+end do
+!$omp end simd
+
+end do
+!$omp end do
+
+
+!$omp do
+do i=1,Nnodes   ! 1st loop to be optimized
+
+!$omp simd
+do ivar=1,NVar
+sum3 = 0.0D0
+do inbr=1,Nnbr
+sum3 = sum3+DPz(inbr,i)*H_t(ivar,idx(inbr,i))
+end do
+Tz(ivar,i) = sum3
+end do
+!$omp end simd
+
+end do
+!$omp end do
+
+!$omp do
+do i=1,Nnodes   ! 1st loop to be optimized
+
+!$omp simd
+do ivar=1,NVar
+sum4 = 0.0D0
+do inbr=1,Nnbr
+sum4 = sum4+Lmat(inbr,i)*H_t(ivar,idx(inbr,i))
+end do
+HV(ivar,i) = sum4
+end do
+!$omp end simd
 
 end do
 !$omp end do
