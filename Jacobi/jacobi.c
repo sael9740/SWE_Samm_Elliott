@@ -105,8 +105,7 @@ void init_sol(Domain_t A)
 }
 
 // calculates max difference of the values in two domains
-double max_diff(Domain_t A,
-                Domain_t B)
+double max_diff(Domain_t A, Domain_t B)
 {
     int i,j,k;
     double max = 0;
