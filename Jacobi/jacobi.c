@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
 
 #define DIMENSION 101
@@ -20,7 +21,9 @@ int main(int argc, char** argv)
     //printf("made it here!");
     double err = TOLERANCE +1;
     
-    Domain_t jacobi_A, jacobi_B, real_sol;
+    Domain_t* jacobi_A = (Domain_t *) malloc(sizeof(Domain_t));
+    Domain_t* jacobi_A = (Domain_t *) malloc(sizeof(Domain_t));
+    Domain_t* jacobi_A = (Domain_t *) malloc(sizeof(Domain_t));
     Domain_t* dummy;
     
     // approximation and real solution arrays
@@ -29,16 +32,16 @@ int main(int argc, char** argv)
     //double real_sol[DIMENSION][DIMENSION][DIMENSION];
     
     // initialize boundaries and real solution
-    init_jacobi(jacobi_A);
-    init_jacobi(jacobi_B);
-    init_sol(real_sol);
+    init_jacobi(&jacobi_A);
+    init_jacobi(&jacobi_B);
+    init_sol(&real_sol);
 
     while(err > TOLERANCE) {
-        do_jacobi(jacobi_A,jacobi_B);
-        dummy = &jacobi_A;
-        jacobi_A = *jacobi_B;
-        *jacobi_B = dummy;
-        err = max_diff(jacobi_A,real_sol);
+        do_jacobi(&jacobi_A,&jacobi_B);
+        *dummy = *jacobi_A;
+        *jacobi_A = *jacobi_B;
+        *jacobi_B = *dummy;
+        err = max_diff(&jacobi_A,&real_sol);
         printf("Error: %f\n",err);
     }
     
