@@ -134,7 +134,7 @@ double max_diff(Domain_t A, Domain_t B)
         }
     }
     
-    return max;
+    return max_val;
 }
 
 void do_jacobi(Domain_t A, Domain_t B)
