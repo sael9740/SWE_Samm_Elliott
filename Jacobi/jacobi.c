@@ -48,7 +48,7 @@ int main(int argc, char** argv)
         printf("Error: %f\n",err);
     }
     
-    t_total = omp_get_wtime() - t_start;
+    t_total = omp_get_wtime(); t_total -= t_start;
     printf("Converged in %f seconds",t_total);
     
     return(0);
@@ -141,7 +141,7 @@ void do_jacobi(Domain_t A, Domain_t B)
 {
     int i,j,k;
     
-#pragma omp parallel for private(i,j,k)
+    #pragma omp parallel for private(i,j,k)
     for(i=1;i<DIMENSION-1;i++) {
         for(j=1;j<DIMENSION-1;j++) {
             for(k=1;k<DIMENSION-1;k++) {
