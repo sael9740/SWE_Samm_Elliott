@@ -100,7 +100,7 @@ double max_diff(double A[DIMENSION][DIMENSION][DIMENSION],
     int i,j,k;
     int imax, jmax, kmax = 1000;
     double max = 0;
-    
+    printf("max=%f\n",max);
     // init inside to 0
     for(i=0;i<DIMENSION;i++) {
         for(j=0;j<DIMENSION;j++) {
