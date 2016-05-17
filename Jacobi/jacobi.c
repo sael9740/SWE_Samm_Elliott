@@ -5,13 +5,16 @@
 
 double f(double i, double j, double k); // solution function
 void init_jacobi(double A[DIMENSION][DIMENSION][DIMENSION]); // function to initialize boundary
-//double init_sol(double A[DIMENSION][DIMENSION][DIMENSION],i_max,j_max,k_max); // function to initialize solution
+void init_sol(double A[DIMENSION][DIMENSION][DIMENSION]); // function to initialize solution
+double max_diff(double A[DIMENSION][DIMENSION][DIMENSION],
+                double B[DIMENSION][DIMENSION][DIMENSION]); // calculates max difference of values in two domains
 
 
 
 int main(int argc, char** argv)
 {
-    printf("made it here!");
+    //printf("made it here!");
+    
     // approximation and real solution arrays
     double jacobi_A[DIMENSION][DIMENSION][DIMENSION];
     double jacobi_B[DIMENSION][DIMENSION][DIMENSION];
@@ -19,7 +22,9 @@ int main(int argc, char** argv)
     
     // initialize boundaries and real solution
     init_jacobi(jacobi_A);
+    init_sol(real_sol);
     
+    printf("maximum difference: %f",max_diff(jacobi_A,real_sol));
     
     return(0);
 }
@@ -37,20 +42,18 @@ double f(double i, double j, double k)
 void init_jacobi(double A[DIMENSION][DIMENSION][DIMENSION])
 {
     int i,j,k;
-    printf("made it here!");
+    //printf("made it here!");
     
     // init inside to 0
-    for(i=1;i<DIMENSION;i++) {
-        for(j=1;j<DIMENSION;j++) {
-            for(k=1;k<DIMENSION;k++) {
+    for(i=1;i<DIMENSION-1;i++) {
+        for(j=1;j<DIMENSION-1;j++) {
+            for(k=1;k<DIMENSION-1;k++) {
                 A[i][j][k]=0;
             }
         }
     }
     
-    printf("made it here!");
-    
-    //init boundaries to match f(x,y,z)
+    // init boundaries to match f(x,y,z)
     for(i=0;i<DIMENSION;i++) {
         for(j=0;j<DIMENSION;j++) {
             A[i][j][0]=f(i,j,0);
@@ -71,4 +74,37 @@ void init_jacobi(double A[DIMENSION][DIMENSION][DIMENSION])
     }
 }
 
+// initializes real solution
+void init_sol(double A[DIMENSION][DIMENSION][DIMENSION])
+{
+    int i,j,k;
+    
+    // init inside to 0
+    for(i=0;i<DIMENSION;i++) {
+        for(j=0;j<DIMENSION;j++) {
+            for(k=0;k<DIMENSION;k++) {
+                A[i][j][k]=f(i,j,k);
+            }
+        }
+    }
+}
 
+// calculates max difference of the values in two domains
+double max_diff(double A[DIMENSION][DIMENSION][DIMENSION],
+                double B[DIMENSION][DIMENSION][DIMENSION])
+{
+    int i,j,k;
+    double max = 0;
+    
+    // init inside to 0
+    for(i=0;i<DIMENSION;i++) {
+        for(j=0;j<DIMENSION;j++) {
+            for(k=0;k<DIMENSION;k++) {
+                if(abs(A[i][j][k]) > max)
+                    max = abs(A[i][j][k]);
+            }
+        }
+    }
+    
+    return max;
+}
