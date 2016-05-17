@@ -136,8 +136,8 @@ void do_jacobi(Domain_t* A, Domain_t* B)
         }
     }
     
-    dummy = A;
-    A = B;
-    B = dummy;
+    *dummy = *A;
+    *A = *B;
+    *B = *dummy;
     
 }
