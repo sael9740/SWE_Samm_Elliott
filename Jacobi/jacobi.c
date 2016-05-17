@@ -108,10 +108,10 @@ double max_diff(double A[DIMENSION][DIMENSION][DIMENSION],
                 if(labs(A[i][j][k]-B[i][j][k]) > max) {
                     max = labs(A[i][j][k]-B[i][j][k]);
                     imax=i;jmax=j;kmax=k;
-                    //printf("maximum difference: %f at (%d,%d,%d)\nf(i,j,k)=%f\n",max,imax,jmax,kmax,f(imax,jmax,kmax));
+                    printf("maximum difference: %f at (%d,%d,%d)\n f(i,j,k)=%f\nA[i][j][k]=%f B[i][j][k]=%f\n",max,imax,jmax,kmax,f(imax,jmax,kmax),A[i][j][k],B[i][j][k]);
                 }
-                if(i==j&&j==k)
-                    printf("at (%d,%d,%d), the value of A_max is %f and B_max is %f and f(i,j,k)=%f\n",i,j,k,A[i][j][k],B[i][j][k],f(i,j,k));
+                //if(i==j&&j==k)
+                //    printf("at (%d,%d,%d), the value of A_max is %f and B_max is %f and f(i,j,k)=%f\n",i,j,k,A[i][j][k],B[i][j][k],f(i,j,k));
             }
         }
     }
