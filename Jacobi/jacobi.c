@@ -36,8 +36,8 @@ int main(int argc, char** argv)
     while(err > TOLERANCE) {
         do_jacobi(jacobi_A,jacobi_B);
         dummy = &jacobi_A;
-        jacobi_A = jacobi_B;
-        jacobi_B = *dummy;
+        *jacobi_A = *jacobi_B;
+        *jacobi_B = dummy;
         err = max_diff(jacobi_A,real_sol);
         printf("Error: %f\n",err);
     }
