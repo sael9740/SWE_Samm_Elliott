@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <math.h>
-#include <cstdlib.h>
 
 #define DIMENSION 101
 #define XYZ_MAX 1
