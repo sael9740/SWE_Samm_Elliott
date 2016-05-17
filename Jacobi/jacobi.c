@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define DIMENSION 101
+#define DIMENSION 11
 #define XYZ_MAX 1
 #define TOLERANCE .0001
 
