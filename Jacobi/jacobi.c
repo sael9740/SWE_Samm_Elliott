@@ -121,13 +121,14 @@ void init_sol(Domain_t A)
 double max_diff(Domain_t A, Domain_t B)
 {
     int i,j,k;
-    double max = 0;
+    double max_val = 0;
 
+    #pragma omp parallel for private(j,k) reduction(max:max_val)
     for(i=0;i<DIMENSION;i++) {
         for(j=0;j<DIMENSION;j++) {
             for(k=0;k<DIMENSION;k++) {
-                if(fabs(A[i][j][k]-B[i][j][k]) > max) {
-                    max = fabs(A[i][j][k]-B[i][j][k]);
+                if(fabs(A[i][j][k]-B[i][j][k]) > max_val) {
+                    max_val = fabs(A[i][j][k]-B[i][j][k]);
                 }
             }
         }
