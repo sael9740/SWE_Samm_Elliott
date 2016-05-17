@@ -71,8 +71,8 @@ void init_jacobi(Domain_t* A)
     // init boundaries to match f(x,y,z)
     for(i=0;i<DIMENSION;i++) {
         for(j=0;j<DIMENSION;j++) {
-            *A[i][j][0]=f(i,j,0);
-            *A[i][j][DIMENSION-1]=f(i,j,DIMENSION-1);
+            (*A)[i][j][0]=f(i,j,0);
+            (*A)[i][j][DIMENSION-1]=f(i,j,DIMENSION-1);
         }
     }
     for(i=0;i<DIMENSION;i++) {
