@@ -101,9 +101,10 @@ double max_diff(double A[DIMENSION][DIMENSION][DIMENSION],
     for(i=0;i<DIMENSION;i++) {
         for(j=0;j<DIMENSION;j++) {
             for(k=0;k<DIMENSION;k++) {
-                if(abs(A[i][j][k]-B[i][j][k]) > max)
+                if(abs(A[i][j][k]-B[i][j][k]) > max) {
                     max = abs(A[i][j][k]-B[i][j][k]);
-                imax=i;jmax=j;kmax=k;
+                    imax=i;jmax=j;kmax=k;
+                }
             }
         }
         
