@@ -36,13 +36,13 @@ double f(double i, double j, double k)
 
 void init_jacobi(double A[DIMENSION][DIMENSION][DIMENSION])
 {
-    
+    int i,j,k;
     printf("made it here!");
     
     // init inside to 0
-    for(int i=1;i<DIMENSION;i++) {
-        for(int j=1;j<DIMENSION;j++) {
-            for(int k=1;k<DIMENSION;k++) {
+    for(i=1;i<DIMENSION;i++) {
+        for(j=1;j<DIMENSION;j++) {
+            for(k=1;k<DIMENSION;k++) {
                 A[i][j][k]=0;
             }
         }
@@ -51,20 +51,20 @@ void init_jacobi(double A[DIMENSION][DIMENSION][DIMENSION])
     printf("made it here!");
     
     //init boundaries to match f(x,y,z)
-    for(int i=0;i<DIMENSION;i++) {
-        for(int j=0;j<DIMENSION;j++) {
+    for(i=0;i<DIMENSION;i++) {
+        for(j=0;j<DIMENSION;j++) {
             A[i][j][0]=f(i,j,0);
             A[i][j][DIMENSION-1]=f(i,j,DIMENSION-1);
         }
     }
-    for(int i=0;i<DIMENSION;i++) {
-        for(int k=0;k<DIMENSION;k++) {
+    for(i=0;i<DIMENSION;i++) {
+        for(k=0;k<DIMENSION;k++) {
             A[i][0][k]=f(i,0,k);
             A[i][DIMENSION-1][k]=f(i,DIMENSION-1,k);
         }
     }
-    for(int j=0;j<DIMENSION;j++) {
-        for(int k=0;k<DIMENSION;k++) {
+    for(j=0;j<DIMENSION;j++) {
+        for(k=0;k<DIMENSION;k++) {
             A[0][j][k]=f(0,j,k);
             A[DIMENSION-1][j][k]=f(DIMENSION-1,j,k);
         }
