@@ -109,7 +109,7 @@ double max_diff(double A[DIMENSION][DIMENSION][DIMENSION],
         
     }
     printf("maximum difference: %f at (%d,%d,%d)\nf(i,j,k)=%f\n",max,imax,jmax,kmax,f(imax,jmax,kmax));
-    printf("value of A_max is %f and B_max is %f\n",A[imax][jmax][kmax],B[imax][jmax][kmax])
+    printf("value of A_max is %f and B_max is %f\n",A[imax][jmax][kmax],B[imax][jmax][kmax]);
     return max;
 }
 
