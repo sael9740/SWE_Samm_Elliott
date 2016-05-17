@@ -24,7 +24,7 @@ int main(int argc, char** argv)
     init_jacobi(jacobi_A);
     init_sol(real_sol);
     
-    printf("maximum difference: %f",max_diff(jacobi_A,real_sol));
+    max_diff(jacobi_A,real_sol);
     
     return(0);
 }
@@ -94,6 +94,7 @@ double max_diff(double A[DIMENSION][DIMENSION][DIMENSION],
                 double B[DIMENSION][DIMENSION][DIMENSION])
 {
     int i,j,k;
+    int imax, jmax, kmax = 1000;
     double max = 0;
     
     // init inside to 0
@@ -102,9 +103,11 @@ double max_diff(double A[DIMENSION][DIMENSION][DIMENSION],
             for(k=0;k<DIMENSION;k++) {
                 if(abs(A[i][j][k]) > max)
                     max = abs(A[i][j][k]);
+                imax=i;jmax=i;kmax=i;
             }
         }
+        
     }
-    
+    printf("maximum difference: %f at (%d,%d,%d)\n",max,imax,jmax,kmax);
     return max;
 }
