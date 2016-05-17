@@ -63,7 +63,7 @@ void init_jacobi(Domain_t* A)
     for(i=1;i<DIMENSION-1;i++) {
         for(j=1;j<DIMENSION-1;j++) {
             for(k=1;k<DIMENSION-1;k++) {
-                A[i][j][k]=0;
+                (*A)[i][j][k]=0;
             }
         }
     }
