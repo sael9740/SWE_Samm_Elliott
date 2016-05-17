@@ -126,7 +126,7 @@ double max_diff(Domain_t A, Domain_t B)
 void do_jacobi(Domain_t A, Domain_t B)
 {
     int i,j,k;
-    Domain_t* dummy;
+    Domain_t *dummy;
     
     for(i=1;i<DIMENSION-1;i++) {
         for(j=1;j<DIMENSION-1;j++) {
@@ -138,6 +138,6 @@ void do_jacobi(Domain_t A, Domain_t B)
     
     dummy = &A;
     A = B;
-    B = *dummy;
+    B = dummy;
     
 }
