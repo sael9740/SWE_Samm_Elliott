@@ -5,7 +5,7 @@
 #define XYZ_MAX 1
 #define TOLERANCE .0001
 
-typedef double jacobi_domain[DIMENSION][DIMENSION][DIMENSION]
+typedef double Domain_t[DIMENSION][DIMENSION][DIMENSION];
 
 double f(int i, int j, int k); // solution function
 void init_jacobi(double A[DIMENSION][DIMENSION][DIMENSION]); // function to initialize boundary
@@ -20,7 +20,7 @@ int main(int argc, char** argv)
     //printf("made it here!");
     double err = TOLERANCE +1;
     
-    jacobi_domain jacobi_A, jacobi_B, real_sol;
+    Domain_t jacobi_A, jacobi_B, real_sol;
     
     // approximation and real solution arrays
     //double jacobi_A[DIMENSION][DIMENSION][DIMENSION];
@@ -127,7 +127,7 @@ double max_diff(double A[DIMENSION][DIMENSION][DIMENSION],
 void do_jacobi(double A[DIMENSION][DIMENSION][DIMENSION], double B[DIMENSION][DIMENSION][DIMENSION])
 {
     int i,j,k;
-    double(*)[DIMENSION][DIMENSION] dummy;
+    Domain_t* dummy;
     
     for(i=1;i<DIMENSION-1;i++) {
         for(j=1;j<DIMENSION-1;j++) {
@@ -137,8 +137,8 @@ void do_jacobi(double A[DIMENSION][DIMENSION][DIMENSION], double B[DIMENSION][DI
         }
     }
     
-    dummy = A;
+    dummy = &A;
     A = B;
-    B = dummy;
+    B = *dummy;
     
 }
