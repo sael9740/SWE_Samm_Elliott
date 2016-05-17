@@ -105,7 +105,7 @@ void init_sol(Domain_t A)
     for(i=0;i<DIMENSION;i++) {
         for(j=0;j<DIMENSION;j++) {
             for(k=0;k<DIMENSION;k++) {
-                (A[i][j][k]=f(i,j,k);
+                A[i][j][k]=f(i,j,k);
             }
         }
     }
