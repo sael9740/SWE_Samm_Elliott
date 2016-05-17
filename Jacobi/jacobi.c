@@ -3,18 +3,20 @@
 
 #define DIMENSION 101
 #define XYZ_MAX 1
+#define TOLERANCE .0001
 
 double f(int i, int j, int k); // solution function
 void init_jacobi(double A[DIMENSION][DIMENSION][DIMENSION]); // function to initialize boundary
 void init_sol(double A[DIMENSION][DIMENSION][DIMENSION]); // function to initialize solution
-double max_diff(double A[DIMENSION][DIMENSION][DIMENSION],
-                double B[DIMENSION][DIMENSION][DIMENSION]); // calculates max difference of values in two domains
+double max_diff(double A[DIMENSION][DIMENSION][DIMENSION], double B[DIMENSION][DIMENSION][DIMENSION]); // calculates max difference of values in two domains
+void do_jacobi(double A[DIMENSION][DIMENSION][DIMENSION], double B[DIMENSION][DIMENSION][DIMENSION]);
 
 
 
 int main(int argc, char** argv)
 {
     //printf("made it here!");
+    double err = TOLERANCE +1;
     
     // approximation and real solution arrays
     double jacobi_A[DIMENSION][DIMENSION][DIMENSION];
@@ -23,9 +25,14 @@ int main(int argc, char** argv)
     
     // initialize boundaries and real solution
     init_jacobi(jacobi_A);
+    init_jacobi(jacobi_B);
     init_sol(real_sol);
-    
-    max_diff(jacobi_A,real_sol);
+
+    while(err > tolerance) {
+        do_jacobi(jacobi_A,jacobi_B);
+        err = max_diff(jacobi_A,real_sol);
+        printf("Error: %f\n",err);
+    }
     
     return(0);
 }
@@ -98,25 +105,36 @@ double max_diff(double A[DIMENSION][DIMENSION][DIMENSION],
                 double B[DIMENSION][DIMENSION][DIMENSION])
 {
     int i,j,k;
-    int imax, jmax, kmax = 1000;
     double max = 0;
-    // init inside to 0
+
     for(i=0;i<DIMENSION;i++) {
         for(j=0;j<DIMENSION;j++) {
             for(k=0;k<DIMENSION;k++) {
                 if(fabs(A[i][j][k]-B[i][j][k]) > max) {
                     max = fabs(A[i][j][k]-B[i][j][k]);
-                    imax=i;jmax=j;kmax=k;
-                    //printf("maximum difference: %f at (%d,%d,%d)\n f(i,j,k)=%f\nA[i][j][k]=%f B[i][j][k]=%f\n",max,imax,jmax,kmax,f(imax,jmax,kmax),A[i][j][k],B[i][j][k]);
                 }
-                //if(i==j&&j==k)
-                //    printf("at (%d,%d,%d), the value of A_max is %f and B_max is %f and f(i,j,k)=%f\n",i,j,k,A[i][j][k],B[i][j][k],f(i,j,k));
             }
         }
     }
     
-    printf("Total maximum difference: %f at (%d,%d,%d)\nf(i,j,k)=%f\n",max,imax,jmax,kmax,f(imax,jmax,kmax));
-    printf("value of A_max is %f and B_max is %f\n",A[imax][jmax][kmax],B[imax][jmax][kmax]);
     return max;
 }
 
+void do_jacobi(double A[DIMENSION][DIMENSION][DIMENSION], double B[DIMENSION][DIMENSION][DIMENSION])
+{
+    int i,j,k;
+    double* dummy;
+    
+    for(i=1;i<DIMENSION-1;i++) {
+        for(j=1;j<DIMENSION-1;j++) {
+            for(k=1;k<DIMENSION-1;k++) {
+                B[i][j][k]=(A[i-1][j][k]+A[i+1][j][k]+A[i][j-1][k]+A[i][j+1][k]+A[i][j][k-1]+A[i][j][k+1])/6;
+            }
+        }
+    }
+    
+    dummy = A;
+    A = B;
+    B = dummy;
+    
+}
