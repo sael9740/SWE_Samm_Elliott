@@ -33,9 +33,12 @@ int main(int argc, char** argv)
 // solution function
 double f(double i, double j, double k)
 {
-    int x = i*XYZ_MAX/(DIMENSION-1);
-    int y = j*XYZ_MAX/(DIMENSION-1);
-    int z = k*XYZ_MAX/(DIMENSION-1);
+    double x,y,z;
+    
+    x = i*XYZ_MAX/(DIMENSION-1);
+    y = j*XYZ_MAX/(DIMENSION-1);
+    z = k*XYZ_MAX/(DIMENSION-1);
+    
     return(x+y+z);
 }
 
