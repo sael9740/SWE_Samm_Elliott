@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <math.h>
 
 #define DIMENSION 101
 #define XYZ_MAX 1
@@ -104,8 +105,8 @@ double max_diff(double A[DIMENSION][DIMENSION][DIMENSION],
     for(i=0;i<DIMENSION;i++) {
         for(j=0;j<DIMENSION;j++) {
             for(k=0;k<DIMENSION;k++) {
-                if(abs(A[i][j][k]-B[i][j][k]) > max) {
-                    max = abs(A[i][j][k]-B[i][j][k]);
+                if(labs(A[i][j][k]-B[i][j][k]) > max) {
+                    max = labs(A[i][j][k]-B[i][j][k]);
                     imax=i;jmax=j;kmax=k;
                     //printf("maximum difference: %f at (%d,%d,%d)\nf(i,j,k)=%f\n",max,imax,jmax,kmax,f(imax,jmax,kmax));
                 }
