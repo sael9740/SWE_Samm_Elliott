@@ -49,7 +49,7 @@ int main(int argc, char** argv)
         printf("Error: %f\n",err);
     }
     
-    t_total = omp_get_wtime(); t_total -= t_start;
+    t_total = omp_get_wtime() - t_start;
     printf("Converged in %f seconds",t_total);
     
     return(0);
