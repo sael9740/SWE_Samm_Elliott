@@ -28,7 +28,7 @@ int main(int argc, char** argv)
     init_jacobi(jacobi_B);
     init_sol(real_sol);
 
-    while(err > tolerance) {
+    while(err > TOLERANCE) {
         do_jacobi(jacobi_A,jacobi_B);
         err = max_diff(jacobi_A,real_sol);
         printf("Error: %f\n",err);
@@ -123,7 +123,7 @@ double max_diff(double A[DIMENSION][DIMENSION][DIMENSION],
 void do_jacobi(double A[DIMENSION][DIMENSION][DIMENSION], double B[DIMENSION][DIMENSION][DIMENSION])
 {
     int i,j,k;
-    double*[DIMENSION][DIMENSION] dummy;
+    double*** dummy;
     
     for(i=1;i<DIMENSION-1;i++) {
         for(j=1;j<DIMENSION-1;j++) {
