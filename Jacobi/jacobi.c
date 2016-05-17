@@ -100,15 +100,14 @@ double max_diff(double A[DIMENSION][DIMENSION][DIMENSION],
     int i,j,k;
     int imax, jmax, kmax = 1000;
     double max = 0;
-    printf("max=%f\n",max);
     // init inside to 0
     for(i=0;i<DIMENSION;i++) {
         for(j=0;j<DIMENSION;j++) {
             for(k=0;k<DIMENSION;k++) {
-                if(labs(A[i][j][k]-B[i][j][k]) > max) {
-                    max = labs(A[i][j][k]-B[i][j][k]);
+                if(fabs(A[i][j][k]-B[i][j][k]) > max) {
+                    max = fabs(A[i][j][k]-B[i][j][k]);
                     imax=i;jmax=j;kmax=k;
-                    printf("maximum difference: %f at (%d,%d,%d)\n f(i,j,k)=%f\nA[i][j][k]=%f B[i][j][k]=%f\n",max,imax,jmax,kmax,f(imax,jmax,kmax),A[i][j][k],B[i][j][k]);
+                    //printf("maximum difference: %f at (%d,%d,%d)\n f(i,j,k)=%f\nA[i][j][k]=%f B[i][j][k]=%f\n",max,imax,jmax,kmax,f(imax,jmax,kmax),A[i][j][k],B[i][j][k]);
                 }
                 //if(i==j&&j==k)
                 //    printf("at (%d,%d,%d), the value of A_max is %f and B_max is %f and f(i,j,k)=%f\n",i,j,k,A[i][j][k],B[i][j][k],f(i,j,k));
