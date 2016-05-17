@@ -111,7 +111,7 @@ double max_diff(double A[DIMENSION][DIMENSION][DIMENSION],
                 }
             }
         }
-        printf("value of A_max is %f and B_max is %f and f(i,j,k)=%f\n",A[imax][jmax][kmax],B[imax][jmax][kmax],f(i,j,k));
+        printf("value of A_max is %f and B_max is %f and f(i,j,k)=%f\n",A[i][j][k],B[i][j][k],f(i,j,k));
         
     }
     
