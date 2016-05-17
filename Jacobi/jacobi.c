@@ -77,14 +77,14 @@ void init_jacobi(Domain_t* A)
     }
     for(i=0;i<DIMENSION;i++) {
         for(k=0;k<DIMENSION;k++) {
-            *A[i][0][k]=f(i,0,k);
-            *A[i][DIMENSION-1][k]=f(i,DIMENSION-1,k);
+            (*A)[i][0][k]=f(i,0,k);
+            (*A)[i][DIMENSION-1][k]=f(i,DIMENSION-1,k);
         }
     }
     for(j=0;j<DIMENSION;j++) {
         for(k=0;k<DIMENSION;k++) {
-            *A[0][j][k]=f(0,j,k);
-            *A[DIMENSION-1][j][k]=f(DIMENSION-1,j,k);
+            (*A)[0][j][k]=f(0,j,k);
+            (*A)[DIMENSION-1][j][k]=f(DIMENSION-1,j,k);
         }
     }
 }
@@ -98,7 +98,7 @@ void init_sol(Domain_t* A)
     for(i=0;i<DIMENSION;i++) {
         for(j=0;j<DIMENSION;j++) {
             for(k=0;k<DIMENSION;k++) {
-                *A[i][j][k]=f(i,j,k);
+                (*A)[i][j][k]=f(i,j,k);
             }
         }
     }
@@ -114,7 +114,7 @@ double max_diff(Domain_t* A, Domain_t* B)
         for(j=0;j<DIMENSION;j++) {
             for(k=0;k<DIMENSION;k++) {
                 if(fabs(*A[i][j][k]-*B[i][j][k]) > max) {
-                    max = fabs(*A[i][j][k]-*B[i][j][k]);
+                    max = fabs((*A)[i][j][k]-(*B)[i][j][k]);
                 }
             }
         }
@@ -131,7 +131,7 @@ void do_jacobi(Domain_t* A, Domain_t* B)
     for(i=1;i<DIMENSION-1;i++) {
         for(j=1;j<DIMENSION-1;j++) {
             for(k=1;k<DIMENSION-1;k++) {
-                *B[i][j][k]=(*A[i-1][j][k]+*A[i+1][j][k]+*A[i][j-1][k]+*A[i][j+1][k]+*A[i][j][k-1]+*A[i][j][k+1])/6;
+                (*B)[i][j][k]=((*A)[i-1][j][k]+(*A)[i+1][j][k]+(*A)[i][j-1][k]+(*A)[i][j+1][k]+(*A)[i][j][k-1]+(*A)[i][j][k+1])/6;
             }
         }
     }
