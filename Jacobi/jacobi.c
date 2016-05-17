@@ -8,10 +8,10 @@
 typedef double Domain_t[DIMENSION][DIMENSION][DIMENSION];
 
 double f(int i, int j, int k); // solution function
-void init_jacobi(double A[DIMENSION][DIMENSION][DIMENSION]); // function to initialize boundary
-void init_sol(double A[DIMENSION][DIMENSION][DIMENSION]); // function to initialize solution
-double max_diff(double A[DIMENSION][DIMENSION][DIMENSION], double B[DIMENSION][DIMENSION][DIMENSION]); // calculates max difference of values in two domains
-void do_jacobi(double A[DIMENSION][DIMENSION][DIMENSION], double B[DIMENSION][DIMENSION][DIMENSION]);
+void init_jacobi(Domain_t A); // function to initialize boundary
+void init_sol(Domain_t A); // function to initialize solution
+double max_diff(Domain_t A, Domain_t B); // calculates max difference of values in two domains
+void do_jacobi(Domain_t A, Domain_t B);
 
 
 
@@ -54,7 +54,7 @@ double f(int i, int j, int k)
     return(x+y+z);
 }
 
-void init_jacobi(double A[DIMENSION][DIMENSION][DIMENSION])
+void init_jacobi(Domain_t A)
 {
     int i,j,k;
     //printf("made it here!");
@@ -90,7 +90,7 @@ void init_jacobi(double A[DIMENSION][DIMENSION][DIMENSION])
 }
 
 // initializes real solution
-void init_sol(double A[DIMENSION][DIMENSION][DIMENSION])
+void init_sol(Domain_t A)
 {
     int i,j,k;
     
@@ -105,8 +105,8 @@ void init_sol(double A[DIMENSION][DIMENSION][DIMENSION])
 }
 
 // calculates max difference of the values in two domains
-double max_diff(double A[DIMENSION][DIMENSION][DIMENSION],
-                double B[DIMENSION][DIMENSION][DIMENSION])
+double max_diff(Domain_t A,
+                Domain_t B)
 {
     int i,j,k;
     double max = 0;
@@ -124,7 +124,7 @@ double max_diff(double A[DIMENSION][DIMENSION][DIMENSION],
     return max;
 }
 
-void do_jacobi(double A[DIMENSION][DIMENSION][DIMENSION], double B[DIMENSION][DIMENSION][DIMENSION])
+void do_jacobi(Domain_t A, Domain_t B)
 {
     int i,j,k;
     Domain_t* dummy;
