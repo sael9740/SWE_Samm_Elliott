@@ -32,16 +32,16 @@ int main(int argc, char** argv)
     //double real_sol[DIMENSION][DIMENSION][DIMENSION];
     
     // initialize boundaries and real solution
-    init_jacobi(&jacobi_A);
-    init_jacobi(&jacobi_B);
-    init_sol(&real_sol);
+    init_jacobi(*jacobi_A);
+    init_jacobi(*jacobi_B);
+    init_sol(*real_sol);
 
     while(err > TOLERANCE) {
-        do_jacobi(&jacobi_A,&jacobi_B);
+        do_jacobi(*jacobi_A,*jacobi_B);
         *dummy = *jacobi_A;
         *jacobi_A = *jacobi_B;
         *jacobi_B = *dummy;
-        err = max_diff(&jacobi_A,&real_sol);
+        err = max_diff(*jacobi_A,*real_sol);
         printf("Error: %f\n",err);
     }
     
