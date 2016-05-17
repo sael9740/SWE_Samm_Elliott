@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define DIMENSION 11
+#define DIMENSION 101
 #define XYZ_MAX 1
-#define TOLERANCE .0001
+#define TOLERANCE .1
 
 typedef double Domain_t[DIMENSION][DIMENSION][DIMENSION];
 
@@ -18,12 +18,13 @@ void do_jacobi(Domain_t A, Domain_t B);
 
 int main(int argc, char** argv)
 {
+    double t_start, t_total;
     //printf("made it here!");
     double err = TOLERANCE +1;
     
     Domain_t* jacobi_A = (Domain_t *) malloc(sizeof(Domain_t));
     Domain_t* jacobi_B = (Domain_t *) malloc(sizeof(Domain_t));
-    Domain_t* real_sol = (Domain_t *) malloc(sizeof(Domain_t));
+    static Domain_t* real_sol = (Domain_t *) malloc(sizeof(Domain_t));
     Domain_t* dummy;
     
     // approximation and real solution arrays
@@ -35,7 +36,9 @@ int main(int argc, char** argv)
     init_jacobi(*jacobi_A);
     init_jacobi(*jacobi_B);
     init_sol(*real_sol);
-
+    
+    t_start = omp_get_wtime();
+    
     while(err > TOLERANCE) {
         do_jacobi(*jacobi_A,*jacobi_B);
         dummy = jacobi_A;
@@ -44,6 +47,9 @@ int main(int argc, char** argv)
         err = max_diff(*jacobi_A,*real_sol);
         printf("Error: %f\n",err);
     }
+    
+    t_total = omp_get_wtime() - t_start;
+    printf("Converged in %f seconds",t_total);
     
     return(0);
 }
@@ -134,6 +140,7 @@ void do_jacobi(Domain_t A, Domain_t B)
 {
     int i,j,k;
     
+#pragma omp parallel for private(i,j,k)
     for(i=1;i<DIMENSION-1;i++) {
         for(j=1;j<DIMENSION-1;j++) {
             for(k=1;k<DIMENSION-1;k++) {
