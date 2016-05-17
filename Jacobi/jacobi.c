@@ -123,7 +123,7 @@ double max_diff(double A[DIMENSION][DIMENSION][DIMENSION],
 void do_jacobi(double A[DIMENSION][DIMENSION][DIMENSION], double B[DIMENSION][DIMENSION][DIMENSION])
 {
     int i,j,k;
-    double*** dummy;
+    double(*)[DIMENSION][DIMENSION] dummy;
     
     for(i=1;i<DIMENSION-1;i++) {
         for(j=1;j<DIMENSION-1;j++) {
