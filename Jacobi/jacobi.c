@@ -8,10 +8,10 @@
 typedef double Domain_t[DIMENSION][DIMENSION][DIMENSION];
 
 double f(int i, int j, int k); // solution function
-void init_jacobi(Domain_t A); // function to initialize boundary
-void init_sol(Domain_t A); // function to initialize solution
-double max_diff(Domain_t A, Domain_t B); // calculates max difference of values in two domains
-void do_jacobi(Domain_t A, Domain_t B);
+void init_jacobi(Domain_t* A); // function to initialize boundary
+void init_sol(Domain_t* A); // function to initialize solution
+double max_diff(Domain_t* A, Domain_t* B); // calculates max difference of values in two domains
+void do_jacobi(Domain_t* A, Domain_t* B);
 
 
 
@@ -28,13 +28,13 @@ int main(int argc, char** argv)
     //double real_sol[DIMENSION][DIMENSION][DIMENSION];
     
     // initialize boundaries and real solution
-    init_jacobi(jacobi_A);
-    init_jacobi(jacobi_B);
-    init_sol(real_sol);
+    init_jacobi(&jacobi_A);
+    init_jacobi(&jacobi_B);
+    init_sol(&real_sol);
 
     while(err > TOLERANCE) {
-        do_jacobi(jacobi_A,jacobi_B);
-        err = max_diff(jacobi_A,real_sol);
+        do_jacobi(&jacobi_A,&jacobi_B);
+        err = max_diff(&jacobi_A,&real_sol);
         printf("Error: %f\n",err);
     }
     
@@ -54,7 +54,7 @@ double f(int i, int j, int k)
     return(x+y+z);
 }
 
-void init_jacobi(Domain_t A)
+void init_jacobi(Domain_t* A)
 {
     int i,j,k;
     //printf("made it here!");
@@ -63,7 +63,7 @@ void init_jacobi(Domain_t A)
     for(i=1;i<DIMENSION-1;i++) {
         for(j=1;j<DIMENSION-1;j++) {
             for(k=1;k<DIMENSION-1;k++) {
-                A[i][j][k]=0;
+                *A[i][j][k]=0;
             }
         }
     }
@@ -71,26 +71,26 @@ void init_jacobi(Domain_t A)
     // init boundaries to match f(x,y,z)
     for(i=0;i<DIMENSION;i++) {
         for(j=0;j<DIMENSION;j++) {
-            A[i][j][0]=f(i,j,0);
-            A[i][j][DIMENSION-1]=f(i,j,DIMENSION-1);
+            *A[i][j][0]=f(i,j,0);
+            *A[i][j][DIMENSION-1]=f(i,j,DIMENSION-1);
         }
     }
     for(i=0;i<DIMENSION;i++) {
         for(k=0;k<DIMENSION;k++) {
-            A[i][0][k]=f(i,0,k);
-            A[i][DIMENSION-1][k]=f(i,DIMENSION-1,k);
+            *A[i][0][k]=f(i,0,k);
+            *A[i][DIMENSION-1][k]=f(i,DIMENSION-1,k);
         }
     }
     for(j=0;j<DIMENSION;j++) {
         for(k=0;k<DIMENSION;k++) {
-            A[0][j][k]=f(0,j,k);
-            A[DIMENSION-1][j][k]=f(DIMENSION-1,j,k);
+            *A[0][j][k]=f(0,j,k);
+            *A[DIMENSION-1][j][k]=f(DIMENSION-1,j,k);
         }
     }
 }
 
 // initializes real solution
-void init_sol(Domain_t A)
+void init_sol(Domain_t* A)
 {
     int i,j,k;
     
@@ -98,14 +98,14 @@ void init_sol(Domain_t A)
     for(i=0;i<DIMENSION;i++) {
         for(j=0;j<DIMENSION;j++) {
             for(k=0;k<DIMENSION;k++) {
-                A[i][j][k]=f(i,j,k);
+                *A[i][j][k]=f(i,j,k);
             }
         }
     }
 }
 
 // calculates max difference of the values in two domains
-double max_diff(Domain_t A, Domain_t B)
+double max_diff(Domain_t* A, Domain_t* B)
 {
     int i,j,k;
     double max = 0;
@@ -113,8 +113,8 @@ double max_diff(Domain_t A, Domain_t B)
     for(i=0;i<DIMENSION;i++) {
         for(j=0;j<DIMENSION;j++) {
             for(k=0;k<DIMENSION;k++) {
-                if(fabs(A[i][j][k]-B[i][j][k]) > max) {
-                    max = fabs(A[i][j][k]-B[i][j][k]);
+                if(fabs(*A[i][j][k]-*B[i][j][k]) > max) {
+                    max = fabs(*A[i][j][k]-*B[i][j][k]);
                 }
             }
         }
@@ -123,21 +123,21 @@ double max_diff(Domain_t A, Domain_t B)
     return max;
 }
 
-void do_jacobi(Domain_t A, Domain_t B)
+void do_jacobi(Domain_t* A, Domain_t* B)
 {
     int i,j,k;
-    Domain_t dummy;
+    Domain_t* dummy;
     
     for(i=1;i<DIMENSION-1;i++) {
         for(j=1;j<DIMENSION-1;j++) {
             for(k=1;k<DIMENSION-1;k++) {
-                B[i][j][k]=(A[i-1][j][k]+A[i+1][j][k]+A[i][j-1][k]+A[i][j+1][k]+A[i][j][k-1]+A[i][j][k+1])/6;
+                *B[i][j][k]=(*A[i-1][j][k]+*A[i+1][j][k]+*A[i][j-1][k]+*A[i][j+1][k]+*A[i][j][k-1]+*A[i][j][k+1])/6;
             }
         }
     }
     
     dummy = A;
     A = B;
-    B = *dummy;
+    B = dummy;
     
 }
