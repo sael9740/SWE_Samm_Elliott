@@ -19,6 +19,7 @@ void do_jacobi(Domain_t A, Domain_t B);
 
 int main(int argc, char** argv)
 {
+    int iter = 0;
     double t_start, t_total;
     //printf("made it here!");
     double err = TOLERANCE +1;
@@ -41,16 +42,21 @@ int main(int argc, char** argv)
     t_start = omp_get_wtime();
     
     while(err > TOLERANCE) {
+        iter++;
+        
         do_jacobi(*jacobi_A,*jacobi_B);
+        
         dummy = jacobi_A;
         jacobi_A = jacobi_B;
         jacobi_B = dummy;
         err = max_diff(*jacobi_A,*real_sol);
-        printf("Error: %f\n",err);
+        
+        if(iter%10 ==0)
+            printf("Error: %f\n",err);
     }
     
     t_total = omp_get_wtime() - t_start;
-    printf("Converged to a maximum error of %f in %f seconds with %d total threads\n",TOLERANCE,t_total,omp_get_num_threads());
+    printf("Converged to a maximum error of %f in %f seconds and %d iterations with %d total threads\n",TOLERANCE,t_total,iter,omp_get_num_threads());
     
     return(0);
 }
