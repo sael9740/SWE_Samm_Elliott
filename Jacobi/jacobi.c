@@ -3,7 +3,7 @@
 #define DIMENSION 101
 #define XYZ_MAX 1
 
-double f(double i, double j, double k); // solution function
+double f(int i, int j, int k); // solution function
 void init_jacobi(double A[DIMENSION][DIMENSION][DIMENSION]); // function to initialize boundary
 void init_sol(double A[DIMENSION][DIMENSION][DIMENSION]); // function to initialize solution
 double max_diff(double A[DIMENSION][DIMENSION][DIMENSION],
@@ -31,13 +31,13 @@ int main(int argc, char** argv)
 
 
 // solution function
-double f(double i, double j, double k)
+double f(int i, int j, int k)
 {
     double x,y,z;
     
-    x = i*XYZ_MAX/(DIMENSION-1);
-    y = j*XYZ_MAX/(DIMENSION-1);
-    z = k*XYZ_MAX/(DIMENSION-1);
+    x = ((double) i)*XYZ_MAX/(DIMENSION-1);
+    y = ((double) j)*XYZ_MAX/(DIMENSION-1);
+    z = ((double) k)*XYZ_MAX/(DIMENSION-1);
     
     return(x+y+z);
 }
