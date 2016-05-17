@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include <math.h>
+#include <cstdlib.h>
 
 #define DIMENSION 101
 #define XYZ_MAX 1
 #define TOLERANCE .0001
 
-#typedef double jacobi_domain[DIMENSION][DIMENSION][DIMENSION]
+typedef double jacobi_domain[DIMENSION][DIMENSION][DIMENSION]
 
 double f(int i, int j, int k); // solution function
 void init_jacobi(double A[DIMENSION][DIMENSION][DIMENSION]); // function to initialize boundary
