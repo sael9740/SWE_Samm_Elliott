@@ -24,7 +24,7 @@ int main(int argc, char** argv)
     
     Domain_t* jacobi_A = (Domain_t *) malloc(sizeof(Domain_t));
     Domain_t* jacobi_B = (Domain_t *) malloc(sizeof(Domain_t));
-    static Domain_t* real_sol = (Domain_t *) malloc(sizeof(Domain_t));
+    Domain_t* real_sol = (Domain_t *) malloc(sizeof(Domain_t));
     Domain_t* dummy;
     
     // approximation and real solution arrays
