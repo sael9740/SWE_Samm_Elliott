@@ -113,7 +113,7 @@ double max_diff(Domain_t* A, Domain_t* B)
     for(i=0;i<DIMENSION;i++) {
         for(j=0;j<DIMENSION;j++) {
             for(k=0;k<DIMENSION;k++) {
-                if(fabs(*A[i][j][k]-*B[i][j][k]) > max) {
+                if(fabs((*A)[i][j][k]-(*B)[i][j][k]) > max) {
                     max = fabs((*A)[i][j][k]-(*B)[i][j][k]);
                 }
             }
