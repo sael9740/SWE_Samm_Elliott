@@ -161,6 +161,7 @@ void do_jacobi(Domain_t A, Domain_t B)
             }
         }
     }
+    #pragma acc wait
     }
 }
 
