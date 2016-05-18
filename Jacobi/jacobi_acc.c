@@ -34,7 +34,7 @@ int main(int argc, char** argv)
     init_jacobi(*jacobi_B);
     init_sol(*real_sol);
     
-    //#pragma acc data copyin(*jacobi_A,*jacobi_B,*real_sol)
+    #pragma acc data copyin(*jacobi_A,*jacobi_B,*real_sol)
     
     t_start = omp_get_wtime();
     
@@ -138,6 +138,8 @@ double max_diff(Domain_t A, Domain_t B)
             }
         }
     }
+    
+    printf("%f\n",max_val);
     
     return max_val;
 }
