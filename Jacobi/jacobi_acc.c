@@ -125,14 +125,15 @@ void init_sol(Domain_t A)
 double max_diff(Domain_t A, Domain_t B)
 {
     int i,j,k;
-    double max_val = 0;
+    double err, max_val = 0;
     
     #pragma acc parallel loop private(j,k) reduction(max:max_val) present_or_copy(A,B)
     for(i=0;i<DIMENSION;i++) {
         for(j=0;j<DIMENSION;j++) {
             for(k=0;k<DIMENSION;k++) {
-                if(fabs(A[i][j][k]-B[i][j][k]) > max_val) {
-                    max_val = fabs(A[i][j][k]-B[i][j][k]);
+                err = fabs(A[i][j][k]-B[i][j][k]);
+                if(err > max_val) {
+                    max_val = err;
                 }
             }
         }
