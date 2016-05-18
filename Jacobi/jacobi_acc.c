@@ -48,6 +48,7 @@ int main(int argc, char** argv)
     t_total = omp_get_wtime() - t_start;
     printf("Converged to a maximum error of %f in %f seconds and %d iterations with %d total threads\n",TOLERANCE,t_total,iter,omp_get_max_threads());
     
+    
     return(0);
 }
 
