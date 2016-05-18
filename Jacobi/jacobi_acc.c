@@ -145,7 +145,7 @@ void do_jacobi(Domain_t A, Domain_t B)
 {
     int i,j,k;
     
-    #pragma acc parallel for private(j,k) reduction(max:max_val) present_or_copy(A,B)
+    #pragma acc parallel for private(j,k) present_or_copy(A,B)
     for(i=1;i<DIMENSION-1;i++) {
         for(j=1;j<DIMENSION-1;j++) {
             for(k=1;k<DIMENSION-1;k++) {
