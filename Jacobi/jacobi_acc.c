@@ -24,29 +24,30 @@ int main(int argc, char** argv)
     //printf("made it here!");
     double err = TOLERANCE +1;
     
-    Domain_t* jacobi_A = (Domain_t *) malloc(sizeof(Domain_t));
-    Domain_t* jacobi_B = (Domain_t *) malloc(sizeof(Domain_t));
-    Domain_t* real_sol = (Domain_t *) malloc(sizeof(Domain_t));
+    //Domain_t* jacobi_A = (Domain_t *) malloc(sizeof(Domain_t));
+    //Domain_t* jacobi_B = (Domain_t *) malloc(sizeof(Domain_t));
+    //Domain_t* real_sol = (Domain_t *) malloc(sizeof(Domain_t));
     Domain_t* dummy;
+    Domain_t jacobi_A, jacobi_B;
     
     // initialize boundaries and real solution
-    init_jacobi(*jacobi_A);
-    init_jacobi(*jacobi_B);
-    init_sol(*real_sol);
+    init_jacobi(jacobi_A);
+    init_jacobi(jacobi_B);
+    init_sol(real_sol);
     
-    //#pragma acc data copyin(*jacobi_A,*jacobi_B,*real_sol)
+    #pragma acc data copyin(jacobi_A,jacobi_B,real_sol)
     
     t_start = omp_get_wtime();
     
     while(err > TOLERANCE) {
         iter++;
         
-        do_jacobi(*jacobi_A,*jacobi_B);
+        do_jacobi(jacobi_A,jacobi_B);
         
-        dummy = jacobi_A;
+        *dummy = jacobi_A;
         jacobi_A = jacobi_B;
-        jacobi_B = dummy;
-        err = max_diff(*jacobi_A,*real_sol);
+        jacobi_B = *dummy;
+        err = max_diff(jacobi_A,real_sol);
         
         if(iter%10 ==0)
             printf("Error: %f\n",err);
