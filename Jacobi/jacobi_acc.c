@@ -7,12 +7,12 @@
 #define XYZ_MAX 1
 #define TOLERANCE .1
 
-typedef double Domain_t[DIMENSION][DIMENSION][DIMENSION];
+typedef float Domain_t[DIMENSION][DIMENSION][DIMENSION];
 
-double f(int i, int j, int k); // solution function
+float f(int i, int j, int k); // solution function
 void init_jacobi(Domain_t A); // function to initialize boundary
 void init_sol(Domain_t A); // function to initialize solution
-double max_diff(Domain_t A, Domain_t B); // calculates max difference of values in two domains
+float max_diff(Domain_t A, Domain_t B); // calculates max difference of values in two domains
 void do_jacobi(Domain_t A, Domain_t B);
 
 
@@ -20,9 +20,9 @@ void do_jacobi(Domain_t A, Domain_t B);
 int main(int argc, char** argv)
 {
     int iter = 0;
-    double t_start, t_total;
+    float t_start, t_total;
     //printf("made it here!");
-    double err = TOLERANCE +1;
+    float err = TOLERANCE +1;
 
     Domain_t jacobi_A, jacobi_B, real_sol;
     
@@ -54,13 +54,13 @@ int main(int argc, char** argv)
 
 
 // solution function
-double f(int i, int j, int k)
+float f(int i, int j, int k)
 {
-    double x,y,z;
+    float x,y,z;
     
-    x = ((double) i)*XYZ_MAX/(DIMENSION-1);
-    y = ((double) j)*XYZ_MAX/(DIMENSION-1);
-    z = ((double) k)*XYZ_MAX/(DIMENSION-1);
+    x = ((float) i)*XYZ_MAX/(DIMENSION-1);
+    y = ((float) j)*XYZ_MAX/(DIMENSION-1);
+    z = ((float) k)*XYZ_MAX/(DIMENSION-1);
     
     return(x+y+z);
 }
@@ -116,10 +116,10 @@ void init_sol(Domain_t A)
 }
 
 // calculates max difference of the values in two domains
-double max_diff(Domain_t A, Domain_t B)
+float max_diff(Domain_t A, Domain_t B)
 {
     int i,j,k;
-    double err, max_val = 0;
+    float err, max_val = 0;
     
     #pragma acc parallel loop private(j,k,err) reduction(max:max_val) independent collapse(3) present_or_copyin(A[:DIMENSION][:DIMENSION][:DIMENSION],B[:DIMENSION][:DIMENSION][:DIMENSION])
     for(i=0;i<DIMENSION;i++) {
