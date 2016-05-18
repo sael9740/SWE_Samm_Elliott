@@ -36,15 +36,11 @@ int main(int argc, char** argv)
     t_start = omp_get_wtime();
     
     while(err > TOLERANCE) {
-        iter++;
-        if(iter%2==0) {
-            do_jacobi(jacobi_A,jacobi_B);
-            err = max_diff(jacobi_A,real_sol);
-        }
-        if(iter%2==1) {
-            do_jacobi(jacobi_B,jacobi_A);
-            err = max_diff(jacobi_B,real_sol);
-        }
+        iter += 2;
+        
+        do_jacobi(jacobi_A,jacobi_B);
+        err = max_diff(jacobi_A,real_sol);
+        
         if(iter%10 ==0)
             printf("Error: %f\n",err);
     }
@@ -144,14 +140,26 @@ double max_diff(Domain_t A, Domain_t B)
 void do_jacobi(Domain_t A, Domain_t B)
 {
     int i,j,k;
-    
-    #pragma acc parallel loop private(j,k) independent collapse(3) present_or_copyin(A[:DIMENSION][:DIMENSION][:DIMENSION],B[:DIMENSION][:DIMENSION][:DIMENSION])
+
+    #pragma acc parallel private(i,j,k) present_or_copyin(A[:DIMENSION][:DIMENSION][:DIMENSION],B[:DIMENSION][:DIMENSION][:DIMENSION])
+    {
+    #pragma acc loop  independent collapse(3)
     for(i=1;i<DIMENSION-1;i++) {
         for(j=1;j<DIMENSION-1;j++) {
             for(k=1;k<DIMENSION-1;k++) {
                 B[i][j][k]=(A[i-1][j][k]+A[i+1][j][k]+A[i][j-1][k]+A[i][j+1][k]+A[i][j][k-1]+A[i][j][k+1])/6;
             }
         }
+    }
+    
+    #pragma acc loop independent collapse(3)
+    for(i=1;i<DIMENSION-1;i++) {
+        for(j=1;j<DIMENSION-1;j++) {
+            for(k=1;k<DIMENSION-1;k++) {
+                A[i][j][k]=(B[i-1][j][k]+B[i+1][j][k]+B[i][j-1][k]+B[i][j+1][k]+B[i][j][k-1]+B[i][j][k+1])/6;
+            }
+        }
+    }
     }
 }
 
