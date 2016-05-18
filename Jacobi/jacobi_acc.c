@@ -32,7 +32,7 @@ int main(int argc, char** argv)
     init_sol(real_sol);
     
     #pragma acc data copyin(jacobi_A,jacobi_B,real_sol)
-    
+    {
     t_start = omp_get_wtime();
     
     while(err > TOLERANCE) {
@@ -44,7 +44,7 @@ int main(int argc, char** argv)
         if(iter%10 ==0)
             printf("Error: %f\n",err);
     }
-    
+    }
     t_total = omp_get_wtime() - t_start;
     printf("Converged to a maximum error of %f in %f seconds and %d iterations with %d total threads\n",TOLERANCE,t_total,iter,omp_get_max_threads());
     
@@ -151,6 +151,7 @@ void do_jacobi(Domain_t A, Domain_t B)
             }
         }
     }
+    #pragma acc wait
     
     #pragma acc loop independent collapse(3)
     for(i=1;i<DIMENSION-1;i++) {
