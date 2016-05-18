@@ -127,7 +127,7 @@ double max_diff(Domain_t A, Domain_t B)
     int i,j,k;
     double err, max_val = 0;
     
-    #pragma acc parallel loop private(j,k) reduction(max:max_val) present_or_copy(A,B)
+    #pragma acc parallel loop private(j,k,err) reduction(max:max_val) present_or_copy(A,B)
     for(i=0;i<DIMENSION;i++) {
         for(j=0;j<DIMENSION;j++) {
             for(k=0;k<DIMENSION;k++) {
