@@ -42,7 +42,7 @@ int main(int argc, char** argv)
         do_jacobi(jacobi_A,jacobi_B);
         err = max_diff(jacobi_A,real_sol);
         
-        if(iter%10 ==0)
+        if(iter%100 ==0)
             printf("Error: %f\n",err);
     }
     }
