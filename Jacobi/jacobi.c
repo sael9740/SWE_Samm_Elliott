@@ -3,7 +3,7 @@
 #include <math.h>
 #include <omp.h>
 
-#define DIMENSION 1001
+#define DIMENSION 201
 #define XYZ_MAX 1
 #define TOLERANCE .1
 
