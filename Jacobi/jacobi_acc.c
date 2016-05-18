@@ -23,11 +23,7 @@ int main(int argc, char** argv)
     double t_start, t_total;
     //printf("made it here!");
     double err = TOLERANCE +1;
-    
-    //Domain_t* jacobi_A = (Domain_t *) malloc(sizeof(Domain_t));
-    //Domain_t* jacobi_B = (Domain_t *) malloc(sizeof(Domain_t));
-    //Domain_t* real_sol = (Domain_t *) malloc(sizeof(Domain_t));
-    Domain_t* dummy;
+
     Domain_t jacobi_A, jacobi_B, real_sol;
     
     // initialize boundaries and real solution
@@ -41,14 +37,14 @@ int main(int argc, char** argv)
     
     while(err > TOLERANCE) {
         iter++;
-        
-        do_jacobi(jacobi_A,jacobi_B);
-        
-        dummy = (Domain_t *) &jacobi_A;
-        jacobi_A = &jacobi_B;
-        jacobi_B = dummy;
-        err = max_diff(jacobi_A,real_sol);
-        
+        if(iter%2==0) {
+            do_jacobi(jacobi_A,jacobi_B);
+            err = max_diff(jacobi_A,real_sol);
+        }
+        if(iter%2==1) {
+            do_jacobi(jacobi_B,jacobi_A);
+            err = max_diff(jacobi_B,real_sol);
+        }
         if(iter%10 ==0)
             printf("Error: %f\n",err);
     }
