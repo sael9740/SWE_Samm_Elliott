@@ -28,7 +28,7 @@ int main(int argc, char** argv)
     //Domain_t* jacobi_B = (Domain_t *) malloc(sizeof(Domain_t));
     //Domain_t* real_sol = (Domain_t *) malloc(sizeof(Domain_t));
     Domain_t* dummy;
-    Domain_t jacobi_A, jacobi_B;
+    Domain_t jacobi_A, jacobi_B, real_sol;
     
     // initialize boundaries and real solution
     init_jacobi(jacobi_A);
