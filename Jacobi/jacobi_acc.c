@@ -121,6 +121,7 @@ float max_diff(Domain_t A, Domain_t B)
     int i,j,k;
     float err, max_val = 0;
     
+    #pragma omp parallel for private(j,k,err) reduction(max:max_val) collapse(3)
     #pragma acc parallel loop private(j,k,err) reduction(max:max_val) independent collapse(3) present_or_copyin(A[:DIMENSION][:DIMENSION][:DIMENSION],B[:DIMENSION][:DIMENSION][:DIMENSION])
     for(i=0;i<DIMENSION;i++) {
         for(j=0;j<DIMENSION;j++) {
@@ -144,6 +145,7 @@ void do_jacobi(Domain_t A, Domain_t B)
 
     #pragma acc parallel private(i,j,k) present_or_copyin(A[:DIMENSION][:DIMENSION][:DIMENSION],B[:DIMENSION][:DIMENSION][:DIMENSION])
     {
+    #pragma omp parallel for collapse(3)
     #pragma acc loop  independent collapse(3)
     for(i=1;i<DIMENSION-1;i++) {
         for(j=1;j<DIMENSION-1;j++) {
@@ -153,7 +155,8 @@ void do_jacobi(Domain_t A, Domain_t B)
         }
     }
     #pragma acc wait
-    
+        
+    #pragma omp parallel for collapse(3)
     #pragma acc loop independent collapse(3)
     for(i=1;i<DIMENSION-1;i++) {
         for(j=1;j<DIMENSION-1;j++) {
