@@ -46,7 +46,7 @@ int main(int argc, char** argv)
         
         dummy = (Domain_t *) &jacobi_A;
         *jacobi_A = *jacobi_B;
-        *jacobi_B = dummy;
+        *jacobi_B = **dummy;
         err = max_diff(jacobi_A,real_sol);
         
         if(iter%10 ==0)
