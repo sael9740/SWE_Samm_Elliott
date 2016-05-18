@@ -127,11 +127,9 @@ double max_diff(Domain_t A, Domain_t B)
     int i,j,k;
     double err, max_val = 0;
     
-    #pragma acc parallel loop private(j,k,err) reduction(max:max_val) independent
+    #pragma acc parallel loop private(j,k,err) reduction(max:max_val) independent collapse(3)
     for(i=0;i<DIMENSION;i++) {
-        #pragma acc loop independent
         for(j=0;j<DIMENSION;j++) {
-            #pragma acc loop independent
             for(k=0;k<DIMENSION;k++) {
                 err = fabs(A[i][j][k]-B[i][j][k]);
                 if(err > max_val) {
@@ -148,11 +146,9 @@ void do_jacobi(Domain_t A, Domain_t B)
 {
     int i,j,k;
     
-    #pragma acc parallel loop private(j,k) independent
+    #pragma acc parallel loop private(j,k) independent collapse(3)
     for(i=1;i<DIMENSION-1;i++) {
-        #pragma acc loop independent
         for(j=1;j<DIMENSION-1;j++) {
-            #pragma acc loop independent
             for(k=1;k<DIMENSION-1;k++) {
                 B[i][j][k]=(A[i-1][j][k]+A[i+1][j][k]+A[i][j-1][k]+A[i][j+1][k]+A[i][j][k-1]+A[i][j][k+1])/6;
             }
