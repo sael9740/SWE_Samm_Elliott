@@ -29,11 +29,6 @@ int main(int argc, char** argv)
     Domain_t* real_sol = (Domain_t *) malloc(sizeof(Domain_t));
     Domain_t* dummy;
     
-    // approximation and real solution arrays
-    //double jacobi_A[DIMENSION][DIMENSION][DIMENSION];
-    //double jacobi_B[DIMENSION][DIMENSION][DIMENSION];
-    //double real_sol[DIMENSION][DIMENSION][DIMENSION];
-    
     // initialize boundaries and real solution
     init_jacobi(*jacobi_A);
     init_jacobi(*jacobi_B);

@@ -13,7 +13,7 @@ double f(int i, int j, int k); // solution function
 void init_jacobi(Domain_t A); // function to initialize boundary
 void init_sol(Domain_t A); // function to initialize solution
 double max_diff(Domain_t A, Domain_t B); // calculates max difference of values in two domains
-void do_jacobi(Domain_t A);
+void do_jacobi(Domain_t A, Domain_t B);
 
 
 
@@ -25,30 +25,27 @@ int main(int argc, char** argv)
     double err = TOLERANCE +1;
     
     Domain_t* jacobi_A = (Domain_t *) malloc(sizeof(Domain_t));
-    //Domain_t* jacobi_B = (Domain_t *) malloc(sizeof(Domain_t));
+    Domain_t* jacobi_B = (Domain_t *) malloc(sizeof(Domain_t));
     Domain_t* real_sol = (Domain_t *) malloc(sizeof(Domain_t));
-    //Domain_t* dummy;
-    
-    // approximation and real solution arrays
-    //double jacobi_A[DIMENSION][DIMENSION][DIMENSION];
-    //double jacobi_B[DIMENSION][DIMENSION][DIMENSION];
-    //double real_sol[DIMENSION][DIMENSION][DIMENSION];
+    Domain_t* dummy;
     
     // initialize boundaries and real solution
     init_jacobi(*jacobi_A);
-    //init_jacobi(*jacobi_B);
+    init_jacobi(*jacobi_B);
     init_sol(*real_sol);
+    
+    //#pragma acc data copyin(*jacobi_A,*jacobi_B,*real_sol)
     
     t_start = omp_get_wtime();
     
     while(err > TOLERANCE) {
         iter++;
         
-        do_jacobi(*jacobi_A);
+        do_jacobi(*jacobi_A,*jacobi_B);
         
-        /*dummy = jacobi_A;
+        dummy = jacobi_A;
         jacobi_A = jacobi_B;
-        jacobi_B = dummy;*/
+        jacobi_B = dummy;
         err = max_diff(*jacobi_A,*real_sol);
         
         if(iter%10 ==0)
@@ -129,8 +126,8 @@ double max_diff(Domain_t A, Domain_t B)
 {
     int i,j,k;
     double max_val = 0;
-
-    #pragma omp parallel for private(j,k) reduction(max:max_val)
+    
+    #pragma acc parallel for private(j,k) reduction(max:max_val) present_or_copy(A,B)
     for(i=0;i<DIMENSION;i++) {
         for(j=0;j<DIMENSION;j++) {
             for(k=0;k<DIMENSION;k++) {
@@ -144,16 +141,24 @@ double max_diff(Domain_t A, Domain_t B)
     return max_val;
 }
 
-void do_jacobi(Domain_t A)
+void do_jacobi(Domain_t A, Domain_t B)
 {
     int i,j,k;
     
-    #pragma omp parallel for private(i,j,k)
+    #pragma acc parallel for private(j,k) reduction(max:max_val) present_or_copy(A,B)
     for(i=1;i<DIMENSION-1;i++) {
         for(j=1;j<DIMENSION-1;j++) {
             for(k=1;k<DIMENSION-1;k++) {
-                A[i][j][k]=(A[i-1][j][k]+A[i+1][j][k]+A[i][j-1][k]+A[i][j+1][k]+A[i][j][k-1]+A[i][j][k+1])/6;
+                B[i][j][k]=(A[i-1][j][k]+A[i+1][j][k]+A[i][j-1][k]+A[i][j+1][k]+A[i][j][k-1]+A[i][j][k+1])/6;
             }
         }
     }
 }
+
+
+
+
+
+
+
+
