@@ -5,7 +5,7 @@
 
 #define DIMENSION 201
 #define XYZ_MAX 1
-#define TOLERANCE .1
+#define TOLERANCE 1
 
 typedef float Domain_t[DIMENSION][DIMENSION][DIMENSION];
 
