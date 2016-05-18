@@ -30,8 +30,9 @@ int main(int argc, char** argv)
     init_jacobi(jacobi_A);
     init_jacobi(jacobi_B);
     init_sol(real_sol);
-    
-    #pragma acc data copyin(jacobi_A,jacobi_B,real_sol)
+    #ifdef _OPENACC
+        #pragma acc data copyin(jacobi_A,jacobi_B,real_sol)
+    #endif
     {
     t_start = omp_get_wtime();
     
@@ -121,8 +122,11 @@ float max_diff(Domain_t A, Domain_t B)
     int i,j,k;
     float err, max_val = 0;
     
-    #pragma omp parallel for private(j,k,err) reduction(max:max_val) collapse(3)
-    #pragma acc parallel loop private(j,k,err) reduction(max:max_val) independent collapse(3) present_or_copyin(A[:DIMENSION][:DIMENSION][:DIMENSION],B[:DIMENSION][:DIMENSION][:DIMENSION])
+    #ifdef _OPENACC
+        #pragma acc parallel loop private(j,k,err) reduction(max:max_val) independent collapse(3) present_or_copyin(A[:DIMENSION][:DIMENSION][:DIMENSION],B[:DIMENSION][:DIMENSION][:DIMENSION])
+    #else
+        #pragma omp parallel for private(j,k,err) reduction(max:max_val) collapse(3)
+    #endif
     for(i=0;i<DIMENSION;i++) {
         for(j=0;j<DIMENSION;j++) {
             for(k=0;k<DIMENSION;k++) {
@@ -142,11 +146,16 @@ float max_diff(Domain_t A, Domain_t B)
 void do_jacobi(Domain_t A, Domain_t B)
 {
     int i,j,k;
-
-    #pragma acc parallel private(i,j,k) present_or_copyin(A[:DIMENSION][:DIMENSION][:DIMENSION],B[:DIMENSION][:DIMENSION][:DIMENSION])
+    #ifdef _OPENACC
+        #pragma acc parallel private(i,j,k) present_or_copyin(A[:DIMENSION][:DIMENSION][:DIMENSION],B[:DIMENSION][:DIMENSION][:DIMENSION])
     {
-    #pragma omp parallel for collapse(3)
-    #pragma acc loop  independent collapse(3)
+    #endif
+    
+    #ifdef _OPENACC
+        #pragma acc loop  independent collapse(3)
+    #else
+        #pragma omp parallel for collapse(3)
+    #endif
     for(i=1;i<DIMENSION-1;i++) {
         for(j=1;j<DIMENSION-1;j++) {
             for(k=1;k<DIMENSION-1;k++) {
@@ -154,10 +163,15 @@ void do_jacobi(Domain_t A, Domain_t B)
             }
         }
     }
-    #pragma acc wait
+    #ifdef _OPENACC
+        #pragma acc wait
+    #endif
         
-    #pragma omp parallel for collapse(3)
-    #pragma acc loop independent collapse(3)
+    #ifdef _OPENACC
+        #pragma acc loop  independent collapse(3)
+    #else
+        #pragma omp parallel for collapse(3)
+    #endif
     for(i=1;i<DIMENSION-1;i++) {
         for(j=1;j<DIMENSION-1;j++) {
             for(k=1;k<DIMENSION-1;k++) {
@@ -165,8 +179,10 @@ void do_jacobi(Domain_t A, Domain_t B)
             }
         }
     }
-    #pragma acc wait
+    #ifdef _OPENACC
+        #pragma acc wait
     }
+    #endif
 }
 
 
