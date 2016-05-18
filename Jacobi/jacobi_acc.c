@@ -45,7 +45,7 @@ int main(int argc, char** argv)
         do_jacobi(jacobi_A,jacobi_B);
         
         dummy = (Domain_t *) &jacobi_A;
-        jacobi_A = jacobi_B;
+        *jacobi_A = *jacobi_B;
         jacobi_B = *dummy;
         err = max_diff(jacobi_A,real_sol);
         
